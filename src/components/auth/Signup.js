@@ -1,14 +1,16 @@
-import React, {useRef, useState, useEffect} from "react"
+import React, {useRef, useState} from "react"
 import {Form, Button, Card, Alert} from "react-bootstrap"
 import {useAuth} from "../../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import {auth} from  '../../firebase'
+
 import { database } from '../../firebase'
 
 export default function Signup() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { signup, getUID } = useAuth()
+    const { signup } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const history = useHistory()
@@ -22,16 +24,17 @@ export default function Signup() {
         
         setError('')
         setLoading(true)
+        
         try{
 
             await signup(emailRef.current.value, passwordRef.current.value)
-            const uid = await getUID()
 
-            const roomsRef = database.ref(`users/${uid}`).onWrite(event => {
-                return event.data.ref.set({
+                auth.onAuthStateChanged(user => {
+                    const roomsRef = database.ref(`users/${user.uid}`)
+                    roomsRef.set({
                     name: "New User",
+                    })
                 })
-            })
 
             setLoading(false)
             history.push('/login')
@@ -43,17 +46,6 @@ export default function Signup() {
 
     }
 
-    // useEffect(() => {
-    //     if(currentUser !== null){
-    //         console.log('CreatData')
-    //         const roomsRef = database.ref(`users/${currentUser.uid}`)
-    //         roomsRef.set({
-    //             name: "New User",
-    //         })
-    //     }
-
-    // }, [currentUser])
-    
     return (
         <>
             <Card>

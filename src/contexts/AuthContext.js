@@ -9,7 +9,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
 
-    const [currentUser, setCurrentUser] = useState(null)
+    const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
 
     function signup(emial, password){
@@ -32,13 +32,6 @@ export function AuthProvider({ children }) {
         return currentUser.updatePassword(password)
     }
 
-    function getUID(){
-        auth.onAuthStateChanged(user => {
-            setCurrentUser(user)
-        })
-        return currentUser.uid
-    }
-
     useEffect(() => {
 
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -56,8 +49,7 @@ export function AuthProvider({ children }) {
         login,
         logout,
         resetPassword,
-        updatePassword,
-        getUID
+        updatePassword
     }
 
     return (
