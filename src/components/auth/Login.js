@@ -20,8 +20,8 @@ export default function Login() {
             await login(emailRef.current.value, passwordRef.current.value)
             setLoading(false)
             history.push("/")
-        } 
-        catch{
+            
+        } catch{
             setLoading(false)
             setError('Failled to sing in')
         }

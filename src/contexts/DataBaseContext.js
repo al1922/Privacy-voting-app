@@ -1,60 +1,59 @@
-import React, {useState, useContext, useEffect} from 'react'
-import {auth} from  '../firebase'
+import React, {useContext} from 'react'
+import {database, auth} from  '../firebase'
+import {useAuth} from "./AuthContext"
 
-const AuthContext = React.createContext()
+const DataBaseContext = React.createContext()
 
-export function useAuth() {
-    return useContext(AuthContext)
+export function useDataBase() {
+    return useContext(DataBaseContext)
 }
 
-export function AuthProvider({ children }) {
+export function DataBaseProvider({ children }) {
 
-    const [currentUser, setCurrentUser] = useState()
-    const [loading, setLoading] = useState(true)
+    const {currentUser} = useAuth()
 
-    function signup(emial, password){
-        return auth.createUserWithEmailAndPassword(emial, password)
+    //const [loading, setLoading] = useState(false)
+
+    function uploadUserData(){
+        auth.onAuthStateChanged(user => {
+            const roomsRef = database.ref(`users/${user.uid}`)
+            roomsRef.set({
+            name: "New User",
+            })
+        })
     }
 
-    function login(emial, password){
-        return auth.signInWithEmailAndPassword(emial, password)
-    }
+    function createNewRoom(roomNameRef){
 
-    function logout() {
-        return auth.signOut()
-    }
+        const roomsRef =  database.ref("rooms")
+        const newRoomsRef = roomsRef.push()
+        newRoomsRef.set({
+            name: roomNameRef.current.value,
+            admin: currentUser.uid,
+            access:{
+                user: currentUser.uid,
+            }
 
-    function resetPassword(email) {
-        return auth.sendPasswordResetEmail(email)
-    }
-
-    function updatePassword(password) {
-        return currentUser.updatePassword(password)
-    }
-
-    useEffect(() => {
-
-        const unsubscribe = auth.onAuthStateChanged(user => {
-            setCurrentUser(user)
-            setLoading(false)
         })
 
-        return unsubscribe
+        const addRoomToUserRef = database.ref(`users/${currentUser.uid}/rooms/${newRoomsRef.key}`)
+        addRoomToUserRef.set({ 
+            name: roomNameRef.current.value
+        })
+    }
 
-      }, [])
+    // useEffect(() => {
+
+    //   }, [])
 
     const value ={
-        currentUser,
-        signup,
-        login,
-        logout,
-        resetPassword,
-        updatePassword,
+        uploadUserData,
+        createNewRoom
     }
 
     return (
-        <AuthContext.Provider value={value}>
-            {!loading && children}
-        </AuthContext.Provider>
+        <DataBaseContext.Provider value={value}>
+            {children}
+        </DataBaseContext.Provider>
     )
 }

@@ -1,13 +1,14 @@
 import React, {useRef, useState} from 'react'
 import {Form, Button, Card, Alert} from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
-import { database } from '../../firebase'
-import {useAuth} from "../../contexts/AuthContext"
+import {useDataBase} from "../../contexts/DataBaseContext"
+
+
 
 export default function CreateRoom() {
 
     const roomNameRef = useRef()
-    const {currentUser} = useAuth()
+    const {createNewRoom} = useDataBase()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const history = useHistory()
@@ -18,22 +19,7 @@ export default function CreateRoom() {
         try{
             setError('')
             setLoading(true)
-
-            const roomsRef =  database.ref("Rooms")
-            const newRoomsRef = await roomsRef.push()
-            await newRoomsRef.set({
-                name: roomNameRef.current.value,
-                admin: btoa(currentUser.email),
-                access:{
-                    user: btoa(currentUser.email),
-                }
-
-            })
-
-            const addRoomToUserRef = database.ref(`Users/${btoa(currentUser.email)}/rooms/${newRoomsRef.key}`)
-            await addRoomToUserRef.set({ 
-                name: roomNameRef.current.value
-            })
+            await createNewRoom(roomNameRef)
             setLoading(false)
             history.push('/')
         } catch{

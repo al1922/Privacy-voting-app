@@ -1,15 +1,23 @@
 import React from 'react';
 import Signup from './auth/Signup';
 import {Container} from 'react-bootstrap'
-import {AuthProvider} from "../contexts/AuthContext"
 import {BrowserRouter, Switch, Route} from "react-router-dom"
-import Dashboard from "./dashboard/Dashboard"
-import Login from "./auth/Login"
+
 import PrivateRout from './PrivateRout'
+
+import {AuthProvider} from "../contexts/AuthContext"
+import {DataBaseProvider} from "../contexts/DataBaseContext"
+
+import Login from "./auth/Login"
 import ForgotPassword from './auth/ForgotPassword'
+
+import Dashboard from "./dashboard/Dashboard"
 import UpdateProfile from './dashboard/UpdateProfile'
 import CreateRoom from './dashboard/CreateRoom'
+
 import Room from './dashboard/room/Room'
+
+
 
 function App() {
   return(
@@ -18,6 +26,7 @@ function App() {
         <div className="w-100" style={{maxWidth: "400px"}}>
           <BrowserRouter>
             <AuthProvider>
+              <DataBaseProvider>
               <Switch>
                 <PrivateRout exact path="/" component={Dashboard} />
                 <PrivateRout path="/update-profile" component={UpdateProfile} />
@@ -27,6 +36,7 @@ function App() {
                 <Route path="/login" component={Login} />
                 <Route path="/forgot-password" component={ForgotPassword} />
               </Switch>
+              </DataBaseProvider>
             </AuthProvider>
           </BrowserRouter>
         </div>

@@ -1,16 +1,15 @@
 import React, {useRef, useState} from "react"
 import {Form, Button, Card, Alert} from "react-bootstrap"
 import {useAuth} from "../../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
-import {auth} from  '../../firebase'
-
-import { database } from '../../firebase'
+import {useDataBase} from "../../contexts/DataBaseContext"
+import {Link, useHistory} from "react-router-dom"
 
 export default function Signup() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
     const { signup } = useAuth()
+    const { uploadUserData } = useDataBase()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const history = useHistory()
@@ -26,24 +25,16 @@ export default function Signup() {
         setLoading(true)
         
         try{
-
             await signup(emailRef.current.value, passwordRef.current.value)
-
-                auth.onAuthStateChanged(user => {
-                    const roomsRef = database.ref(`users/${user.uid}`)
-                    roomsRef.set({
-                    name: "New User",
-                    })
-                })
-
+            await uploadUserData()
+            
             setLoading(false)
-            history.push('/login')
-        }
-        catch{
+            history.push('/')
+
+        }catch{
             setLoading(false)
             setError('Failled to creat an account')
         }
-
     }
 
     return (
