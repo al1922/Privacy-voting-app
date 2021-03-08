@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import {database, auth} from  '../firebase'
 import {useAuth} from "./AuthContext"
 
@@ -12,43 +12,44 @@ export function DataBaseProvider({ children }) {
 
     const {currentUser} = useAuth()
 
-    //const [loading, setLoading] = useState(false)
-
     function uploadUserData(){
         auth.onAuthStateChanged(user => {
-            const roomsRef = database.ref(`users/${user.uid}`)
-            roomsRef.set({
-            name: "New User",
+            const userUidData = database.ref(`users/${user.uid}`)
+            userUidData.set({
+            name: "New User"
             })
         })
     }
 
-    function createNewRoom(roomNameRef){
 
-        const roomsRef =  database.ref("rooms")
-        const newRoomsRef = roomsRef.push()
-        newRoomsRef.set({
-            name: roomNameRef.current.value,
-            admin: currentUser.uid,
-            access:{
-                user: currentUser.uid,
-            }
+    function newRoom(roomName){
 
-        })
+        const roomsRef = database.ref(`users/${currentUser.uid}/rooms`)
+        const RoomId = roomsRef.push()
 
-        const addRoomToUserRef = database.ref(`users/${currentUser.uid}/rooms/${newRoomsRef.key}`)
-        addRoomToUserRef.set({ 
-            name: roomNameRef.current.value
+        const values = {
+            name: roomName,
+            admin: true
+        }
+ 
+        RoomId.set(values).then(() => {          
+            RoomId.once('value').then((snap) => {
+                const uploadRoomRef = database.ref(`rooms/${snap.key}`)
+                uploadRoomRef.set({
+                    roomName: roomName,
+                    admin: currentUser.uid,
+                    access:{
+                        user: currentUser.uid,
+                    }
+                })
+            })
         })
     }
 
-    // useEffect(() => {
-
-    //   }, [])
 
     const value ={
         uploadUserData,
-        createNewRoom
+        newRoom
     }
 
     return (

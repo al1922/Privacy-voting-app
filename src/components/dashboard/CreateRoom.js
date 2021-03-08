@@ -8,7 +8,7 @@ import {useDataBase} from "../../contexts/DataBaseContext"
 export default function CreateRoom() {
 
     const roomNameRef = useRef()
-    const {createNewRoom} = useDataBase()
+    const {newRoom} = useDataBase()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const history = useHistory()
@@ -19,9 +19,9 @@ export default function CreateRoom() {
         try{
             setError('')
             setLoading(true)
-            await createNewRoom(roomNameRef)
+            await newRoom(roomNameRef.current.value)
             setLoading(false)
-            history.push('/')
+            //history.push('/')
         } catch{
             setLoading(false)
             setError('Failled to reset password')
