@@ -21,7 +21,7 @@ export default function CreateRoom() {
             setLoading(true)
             await newRoom(roomNameRef.current.value)
             setLoading(false)
-            //history.push('/')
+            history.push('/')
         } catch{
             setLoading(false)
             setError('Failled to reset password')

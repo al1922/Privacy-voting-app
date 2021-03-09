@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {Form, Button, Card, Alert} from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
-import useRooms from './useRooms'
+import {useDataBase} from "../../contexts/DataBaseContext"
 
 export default function Dashboard() {
     const [error, setError] = useState("")
     const {currentUser, logout} = useAuth()
-    const currentUserRooms = useRooms()
+    const {UserRooms} = useDataBase()
+    const currentUsersRooms = UserRooms()
     const history = useHistory()
 
     async function handleLogout() {
@@ -47,19 +48,10 @@ export default function Dashboard() {
 
             </Card> 
             <Form onClick={handleRoom}>
-                {currentUserRooms !== null &&  Object.keys(currentUserRooms).map(key => 
-                    <Button key={key} value={key} >{currentUserRooms[key].name}</Button>
+                {currentUsersRooms !== null &&  Object.keys(currentUsersRooms).map(key => 
+                    <Button key={key} value={key} >{currentUsersRooms[key].name}</Button>
                 )}
             </Form>
         </>
     )
 }
-
-
-
-
-
-                // snapShot.forEach(function (childSnapshot) {
-                //     var childData = childSnapshot.val();
-                //     console.log(childSnapshot.key)
-                // })

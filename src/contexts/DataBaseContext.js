@@ -21,7 +21,6 @@ export function DataBaseProvider({ children }) {
         })
     }
 
-
     function newRoom(roomName){
 
         const roomsRef = database.ref(`users/${currentUser.uid}/rooms`)
@@ -44,12 +43,30 @@ export function DataBaseProvider({ children }) {
                 })
             })
         })
+        //RoomId.off("value")
+    }
+
+    function UserRooms() {
+        const [rooms, setRooms] = useState(null)
+
+        useEffect(() => {
+            const roomsRef = database.ref(`users/${currentUser.uid}/rooms`)
+            roomsRef.on("value", (snapShot) => {
+                setRooms(snapShot.val())
+            })
+            return () => {
+                setRooms(null)
+            }
+        }, [])
+
+        return rooms
     }
 
 
     const value ={
         uploadUserData,
-        newRoom
+        newRoom,
+        UserRooms
     }
 
     return (

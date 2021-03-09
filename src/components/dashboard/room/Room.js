@@ -1,21 +1,13 @@
 import React, {useRef, useState, useEffect} from 'react'
 import {Form, Button, Card, Alert} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-//import { database } from '../firebase'
-//import {useAuth} from "../contexts/AuthContext"
+import { database } from '../../../contexts/DataBaseContext'
 
 export default function Rooom(props) {
 
     const inviteUser = useRef()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
-    const [roomId] = useState(props.match.params.id)
-
-
-    // function inviteNewUser(email) {
-
-
-    // }
 
     async function handleInvite (event){
         event.preventDefault()
@@ -31,22 +23,6 @@ export default function Rooom(props) {
         }
     }
 
-    useEffect(() => {
-        console.log(roomId)
-        // const ref = database.ref(`Rooms`)
-
-        // ref.on("value", (snapShot) => {
-        //     setCurrentUserRooms(snapShot.val())
-        // })
-        
-        // return () => {
-        //     ref.off()
-        // }
-
-
-    }, [])
-
-
     return (
         <>
             <Card>
@@ -55,7 +31,7 @@ export default function Rooom(props) {
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={handleInvite}>
                         <Form.Group id="email">
-                            <Form.Label>Name</Form.Label>
+                            <Form.Label>Emial</Form.Label>
                             <Form.Control type="email" ref={inviteUser} /> 
                         </Form.Group>
     
