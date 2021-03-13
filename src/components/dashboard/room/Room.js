@@ -1,21 +1,23 @@
-import React, {useRef, useState, useEffect} from 'react'
+import React, {useRef, useState} from 'react'
 import {Form, Button, Card, Alert} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { database } from '../../../contexts/DataBaseContext'
+import { useDataBase } from '../../../contexts/DataBaseContext'
 
-export default function Rooom(props) {
+export default function Rooom({match}) {
 
     const inviteUser = useRef()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+    const {invadeUserToRoom} = useDataBase()
+    const roomID = match.params.id
 
-    async function handleInvite (event){
-        event.preventDefault()
+    async function handleInvite (e){
+        e.preventDefault()
         setError('')
         
         try{
             setLoading(true)
-
+            await invadeUserToRoom(inviteUser.current.value, roomID)
             setLoading(false)
         }catch{
             setError('The user with the specified email does not exist')
@@ -30,6 +32,7 @@ export default function Rooom(props) {
                     <h2 className="text-center mb-4" >Invade</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={handleInvite}>
+                        
                         <Form.Group id="email">
                             <Form.Label>Emial</Form.Label>
                             <Form.Control type="email" ref={inviteUser} /> 

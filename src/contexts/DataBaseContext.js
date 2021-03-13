@@ -14,16 +14,21 @@ export function DataBaseProvider({ children }) {
 
     function uploadUserData(){
         auth.onAuthStateChanged(user => {
-            const userUidData = database.ref(`users/${user.uid}`)
+            const userUidData = database.ref(`users/${user.uid}/private`)
             userUidData.set({
-            name: "New User"
+            email: btoa(user.email)
             })
+
+            const publicEmail = database.ref(`public/${btoa(user.email)}`)
+            publicEmail.set({
+                uid: user.uid
+                })
         })
     }
 
     function newRoom(roomName){
 
-        const roomsRef = database.ref(`users/${currentUser.uid}/rooms`)
+        const roomsRef = database.ref(`users/${currentUser.uid}/private/rooms`)
         const RoomId = roomsRef.push()
 
         const values = {
@@ -32,26 +37,24 @@ export function DataBaseProvider({ children }) {
         }
  
         RoomId.set(values).then(() => {          
-            RoomId.once('value').then((snap) => {
+            RoomId.get('value').then((snap) => {
                 const uploadRoomRef = database.ref(`rooms/${snap.key}`)
                 uploadRoomRef.set({
                     roomName: roomName,
                     admin: currentUser.uid,
-                    access:{
-                        user: currentUser.uid,
-                    }
                 })
+                const uploadRoomAccess = database.ref(`rooms/${snap.key}/access`)
+                uploadRoomAccess.push(currentUser.uid)
             })
         })
-        //RoomId.off("value")
     }
 
     function UserRooms() {
         const [rooms, setRooms] = useState(null)
 
         useEffect(() => {
-            const roomsRef = database.ref(`users/${currentUser.uid}/rooms`)
-            roomsRef.on("value", (snapShot) => {
+            const roomsRef = database.ref(`users/${currentUser.uid}/private/rooms`)
+            roomsRef.once("value", (snapShot) => {
                 setRooms(snapShot.val())
             })
             return () => {
@@ -62,12 +65,23 @@ export function DataBaseProvider({ children }) {
         return rooms
     }
 
+    function invadeUserToRoom(email, id){
+        database.ref(`public/${btoa(email)}`).get().then(function(snapshot){
+            const addRoomAccess = database.ref(`rooms/${id}/access`)
+            addRoomAccess.push(snapshot.val().uid)
+
+            // const addRoomToUser = database.ref(`users/${snapshot.val().uid}/public/rooms`)
+            // addRoomAccess.push(snapshot.val().uid)
+        })
+    }
 
     const value ={
         uploadUserData,
         newRoom,
-        UserRooms
+        UserRooms,
+        invadeUserToRoom
     }
+
 
     return (
         <DataBaseContext.Provider value={value}>
