@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react"
 import {Form, Button, Card, Alert} from "react-bootstrap"
 import {useAuth} from "../../contexts/AuthContext"
-import {useDataBase} from "../../contexts/DataBaseContext"
+import {database, auth} from  '../../firebase'
 import {Link, useHistory} from "react-router-dom"
 
 export default function Signup() {
@@ -9,28 +9,36 @@ export default function Signup() {
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
     const { signup } = useAuth()
-    const { uploadUserData } = useDataBase()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const history = useHistory()
     
+
+    function uploadUserData(){
+        auth.onAuthStateChanged(user => {
+            database.ref(`users/${user.uid}/private`).set({
+                email: btoa(user.email)
+            })
+
+            database.ref(`public/${btoa(user.email)}`).set({
+                uid: user.uid
+            })
+        })
+    }
+
     async function handleSubmit(event){
         event.preventDefault()
         
-        if(passwordRef.current.value !== passwordConfirmRef.current.value){
-            return setError('Passwords do not the same')
-        }
-        
+        if(passwordRef.current.value !== passwordConfirmRef.current.value) return setError('Passwords do not the same')
+    
         setError('')
         setLoading(true)
         
         try{
             await signup(emailRef.current.value, passwordRef.current.value)
-            await uploadUserData()
-            
+            uploadUserData()
             setLoading(false)
             history.push('/')
-
         }catch{
             setLoading(false)
             setError('Failled to creat an account')

@@ -15,7 +15,3 @@ export default function PrivateRout( {component: Component, ...rest}) {
         ></Route>
     )
 } 
-
-// Kolejną metodą renderowania warunkowego wewnątrz wyrażenia 
-// jest stosowanie javascriptowego operatora warunkowego 
-// warunek ? true : false.

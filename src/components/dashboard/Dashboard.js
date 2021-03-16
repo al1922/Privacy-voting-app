@@ -1,15 +1,14 @@
-import React, {useState} from 'react'
-import {Form, Button, Card, Alert} from 'react-bootstrap'
+import React, { useState, useEffect } from 'react'
+import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
-import {useAuth} from '../../contexts/AuthContext'
-import {useDataBase} from "../../contexts/DataBaseContext"
+import { useAuth } from '../../contexts/AuthContext'
+import { database } from '../../firebase'
 
 export default function Dashboard() {
     const [error, setError] = useState("")
     const {currentUser, logout} = useAuth()
-    const {UserRooms} = useDataBase()
-    const currentUsersRooms = UserRooms()
     const history = useHistory()
+    const [rooms, setRooms] = useState(null)
 
     async function handleLogout() {
         setError("")
@@ -26,9 +25,20 @@ export default function Dashboard() {
         try{
             history.push(`/room/${event.target.value}`)
         }catch{
-            setError('Failed to creat room')
+            setError('Failed to join room')
         }
     }
+
+    useEffect(() => {
+        const roomsRef = database.ref(`users/${currentUser.uid}/private/rooms`)
+        roomsRef.once("value", (snapShot) => {
+            setRooms(snapShot.val())
+        })
+        return () => {
+            setRooms(null)
+        }
+    }, [currentUser.uid])
+
 
     return (
         <>
@@ -48,8 +58,8 @@ export default function Dashboard() {
 
             </Card> 
             <Form onClick={handleRoom}>
-                {currentUsersRooms !== null &&  Object.keys(currentUsersRooms).map(key => 
-                    <Button key={key} value={key} >{currentUsersRooms[key].name}</Button>
+                {rooms !== null &&  Object.keys(rooms).map(key => 
+                    <Button key={key} value={key} >{rooms[key].name}</Button>
                 )}
             </Form>
         </>
