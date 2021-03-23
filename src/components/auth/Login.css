@@ -1,0 +1,32 @@
+.Login{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;    
+}
+.Login .app-name{
+    color: white;
+    text-align: center;
+    margin-top: 48px;
+    margin-bottom: 48px;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.Login .restart{
+    width: 400px;
+}
+
+.Login .top-line{    
+    border: 1px solid white;
+}
+
+.Login .link{
+    color: #379ec7;
+}
+@media (max-width: 400px) {
+    .Login .restart{
+        margin-top: 0px;
+        width: 340px;
+    }
+}

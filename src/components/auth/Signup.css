@@ -1,0 +1,34 @@
+.Signup{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;    
+}
+.Signup .app-name{
+    color: white;
+    text-align: center;
+    margin-top: 48px;
+    margin-bottom: 48px;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.Signup .restart{
+    width: 400px;
+}
+
+.Signup .top-line{    
+    border: 1px solid white;
+}
+
+.Signup .link{
+    color: #379ec7;
+    margin-bottom: 20px;
+}
+@media (max-width: 400px) {
+
+    .Signup .restart{
+        margin-top: 0px;
+        width: 340px;
+    }
+}

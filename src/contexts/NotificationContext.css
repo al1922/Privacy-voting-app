@@ -1,0 +1,21 @@
+.error, .message, .success{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    color: white;
+    text-align: center;
+    font-size: 24px;
+}
+
+.error {
+    background-color:tomato;
+}
+
+.message {
+    background-color:orange;
+}
+
+.success {
+    background-color:seagreen;
+}

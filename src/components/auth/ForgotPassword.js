@@ -1,14 +1,17 @@
-import React, {useRef, useState} from 'react'
-import {Form, Button, Card, Alert} from 'react-bootstrap'
+import {useRef, useState} from 'react'
+import {Form} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import {useAuth} from "../../contexts/AuthContext"
+import {useNotification} from "../../contexts/NotificationContext"
+import Button from "../form_components/Button"
+
+import './ForgotPassword.css'
 
 export default function ForgotPassword() {
     const emailRef = useRef()
     const { resetPassword } = useAuth()
-    const [error, setError] = useState('')
+    const {setError, DisplayError, setMessage, DisplayMessage} = useNotification()
     const [loading, setLoading] = useState(false)
-    const [message, setMessage] = useState('')
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -21,33 +24,38 @@ export default function ForgotPassword() {
             setMessage('Check your inbox for further instructions')
             setLoading(false)
             
-        } catch{
+        } catch(err){
             setLoading(false)
-            setError('Failled to reset passord')
+            setError(err.message)
         }
 
     }
-    
+
     return (
-        <>
-            <Card>
-                <Card.Body>
-                    <h2 className="text-center mb-4" >Password Reset</h2>
-                    {error && <Alert variant="danger">{error}</Alert>}
-                    {message && <Alert variant="success">{message}</Alert>}
+        
+        <div className="ForgotPassword">
+            <DisplayError/>
+            <DisplayMessage/>
+            <div className="restart" > 
+
+                <p className="app-name">Vote App</p>
+                <hr className="top-line" />
+
+                    <h2 className="text-center mb-4 text-light" >Password Reset</h2>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group id="email">
-                            <Form.Label>Emial</Form.Label>
-                            <Form.Control type="email" ref={emailRef} required /> 
+                            <Form.Control type="email" placeholder="Email" ref={emailRef} required /> 
                         </Form.Group>
-                        <Button disabled={loading} type="submit"> Reset Password </Button>
+                        <Button name="Reset Password" disabled={loading} type="submit"></Button>
                     </Form>
-                </Card.Body>
-            </Card>
-            <div className="w-100 text-center mt-2">
-                Back to <Link to="/login" >Log In</Link>
+
+                <hr className="mt-4 top-line" />
+
+                <div className="w-100 text-center mt-2 text-light">
+                    Back to <Link to="/login" className="link" >Log In</Link>
+                </div>
             </div>
             
-        </>
+        </div>
     )
 }
