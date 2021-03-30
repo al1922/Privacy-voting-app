@@ -1,6 +1,6 @@
 import NavigationBar from './NavigationBar'
 
-import './Dashboard.css'
+import './Dashboard.scss'
 
 export default function Dashboard() {
 
@@ -11,32 +11,37 @@ export default function Dashboard() {
 
 
             <div className="main">
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-                <p className="app-name">Vote App</p>
-
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
+                <p className="appname">Vote App</p>
 
             </div>
             

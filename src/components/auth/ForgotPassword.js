@@ -5,8 +5,6 @@ import {useAuth} from "../../contexts/AuthContext"
 import {useNotification} from "../../contexts/NotificationContext"
 import Button from "../form_components/Button"
 
-import './ForgotPassword.css'
-
 export default function ForgotPassword() {
     const emailRef = useRef()
     const { resetPassword } = useAuth()

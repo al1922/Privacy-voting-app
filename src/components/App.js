@@ -15,11 +15,11 @@ import ForgotPassword from './auth/ForgotPassword'
 
 import Dashboard from "./dashboard/Dashboard"
 import UpdateProfile from './dashboard/UpdateProfile'
-import CreateRoom from './dashboard/CreateRoom'
 
 import Room from './room/Room'
 
-import './App.css'
+import './App.scss'
+import './auth/Auth.scss'
 
 function App() {
   return(
@@ -33,7 +33,6 @@ function App() {
               <Switch>
                 <PrivateRout exact path="/" component={Dashboard} />
                 <PrivateRout path="/update-profile" component={UpdateProfile} />
-                <PrivateRout path="/creat-room" component={CreateRoom} />
                 <PrivateRout exact path="/room/:id" component={Room} />
                 <Route path="/singup" component={Signup} />
                 <Route path="/login" component={Login} />

@@ -1,6 +1,8 @@
+@import '../base';
+
 
 .button{
-    background-color: #25708d; /* Green */
+    background-color: $mainButtonAuthColor; /* Green */
     border: none;
     color: white;
     padding: 12px 16px;

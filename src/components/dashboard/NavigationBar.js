@@ -1,7 +1,13 @@
-import { Nav } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useNotification } from '../../contexts/NotificationContext'
+
+import { HiOutlineLogout, HiViewGridAdd, HiOutlineCog, HiOutlineMail } from "react-icons/hi"
+
+
+// import InvitationsReceived from './InvitationsReceived'
+// import ProfileSettings from './ProfileSettings'
+// import CreateRoom from './CreateRoom'
 
 export default function NavigationBar() {
 
@@ -12,25 +18,39 @@ export default function NavigationBar() {
     async function handleLogout() {
         setError("")
         try{
-            await logout()
-            history.push('/login')
+            setError("WORK")
+            //await logout()
+            //history.push('/login')
         }catch(err){
             setError(err.message)
         }
     }
 
+
     return (
-        <div className="Nav">
-            <DisplayError/>       
-            <Nav defaultActiveKey="/home" className="flex-column">
-                <p className="profile text-white">Profile</p>
-                <p className="text-white">Nick</p>
-                <div className="invitations">
-                    <p className=" text-white"> Invitations received </p>
+        <div className="NavigationBar">
+            <DisplayError/>  
+            <nav className="navigation">
+                <div className="navigation-box">
+                    <div className="navigation-link">
+                        <HiViewGridAdd className="logo"/>
+                        <span className="link-text">Create new room</span>
+                    </div>
+                    <div className="navigation-link">
+                        <HiOutlineCog className="logo"/>
+                        <span className="link-text">Profile settings</span>
+                    </div>
+                    <div className="navigation-link">
+                        <HiOutlineMail className="logo"/>
+                        <span className="link-text">Invitations received</span>
+                    </div>
+                    <div className="navigation-link" onClick={handleLogout}>
+                        <HiOutlineLogout className="logo"/>
+                        <span className="link-text" >Log out</span>
+                    </div>
                 </div>
-                <Nav.Link  className="update-profile">Profile Settings</Nav.Link>
-                <Nav.Link  className="log-out" onClick={handleLogout}>Log Out</Nav.Link>
-            </Nav>
+            </nav>
+            
         </div>
     )
 }

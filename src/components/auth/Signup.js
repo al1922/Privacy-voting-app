@@ -7,8 +7,6 @@ import UploadUserData from './UploadUserData'
 
 import Button from "../form_components/Button"
 
-import "./Signup.css"
-
 export default function Signup() {
     const emailRef = useRef()
     const passwordRef = useRef()

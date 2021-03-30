@@ -1,0 +1,41 @@
+@import '../base';
+
+.ForgotPassword, .Login, .Signup{
+    background: $mainBackgroundColor;
+
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;  
+
+    .restart{
+        width: 400px;
+    }
+
+    .top-line{    
+        border: 1px solid white;
+    }
+    
+    .link{
+        color: $mainLinkAuthColor;
+    }
+
+    .app-name{
+        color: white;
+        text-align: center;
+        margin-top: 48px;
+        margin-bottom: 48px;
+        font-size: 48px;
+        font-weight: bold;
+    }
+
+}
+
+@media (max-width: 400px) {
+    .ForgotPassword, .Login, .Signup{ 
+        .restart{
+            margin-top: 0px;
+            width: 340px;
+        }
+    }
+}
