@@ -14,19 +14,6 @@ export function DatabaseProvider({ children }) {
 
     const { currentUser } = useAuth()
 
-    function uploadUserData(){
-        try {
-            auth.onAuthStateChanged(user => {
-                //Add emial and uid to private user root
-                database.ref(`users/${user.uid}/private`).set({ email: btoa(user.email)})
-
-                //Add emial and uid to public root
-                database.ref(`public/${btoa(user.email)}`).set({ uid: user.uid})
-            })
-        }
-        catch(err){console.log(err)} 
-        
-    }
 
     function creatNewRoom(roomName){
         try{
@@ -57,7 +44,6 @@ export function DatabaseProvider({ children }) {
      
 
     const value ={
-        uploadUserData,
         creatNewRoom,
         DisplayUserRooms
         

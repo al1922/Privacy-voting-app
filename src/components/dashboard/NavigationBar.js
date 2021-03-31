@@ -2,12 +2,12 @@ import { useHistory } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useNotification } from '../../contexts/NotificationContext'
 
-import { HiOutlineLogout, HiViewGridAdd, HiOutlineCog, HiOutlineMail } from "react-icons/hi"
+import { HiOutlineLogout, HiOutlineCog, HiOutlineMail } from "react-icons/hi"
 
 
 // import InvitationsReceived from './InvitationsReceived'
 // import ProfileSettings from './ProfileSettings'
-// import CreateRoom from './CreateRoom'
+import CreateRoom from './CreateRoom'
 
 export default function NavigationBar() {
 
@@ -15,13 +15,16 @@ export default function NavigationBar() {
     const { setError, DisplayError} = useNotification()
     const history = useHistory()
 
+
+    
+
     async function handleLogout() {
         setError("")
         try{
-            setError("WORK")
-            //await logout()
-            //history.push('/login')
-        }catch(err){
+            await logout()
+            history.push('/login')
+        }
+        catch(err){
             setError(err.message)
         }
     }
@@ -32,10 +35,7 @@ export default function NavigationBar() {
             <DisplayError/>  
             <nav className="navigation">
                 <div className="navigation-box">
-                    <div className="navigation-link">
-                        <HiViewGridAdd className="logo"/>
-                        <span className="link-text">Create new room</span>
-                    </div>
+                    <CreateRoom/>
                     <div className="navigation-link">
                         <HiOutlineCog className="logo"/>
                         <span className="link-text">Profile settings</span>

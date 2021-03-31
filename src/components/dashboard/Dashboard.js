@@ -8,41 +8,9 @@ export default function Dashboard() {
     return (
         <div className="Dashboard">
             <NavigationBar/>
-
-
+            
             <div className="main">
                 <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-                <p className="appname">Vote App</p>
-
             </div>
             
         </div>

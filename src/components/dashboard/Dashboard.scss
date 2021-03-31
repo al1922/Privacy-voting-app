@@ -6,6 +6,7 @@
     .NavigationBar {
 
         .navigation {
+            margin-top: -48px;
             width: 6rem;
             height:100vh;
             position: fixed;
@@ -18,6 +19,7 @@
                 margin:0;
                 display:flex;
                 flex-direction:column;
+                cursor: pointer ;
 
                 .navigation-link{
                     display:flex;
@@ -30,44 +32,34 @@
                     .link-text{
                         white-space: nowrap;
                         display: none;
-                        font-size: 20px;
-                        cursor: default ;
-
+                        font-size: 18px;
                     }
 
                     .logo{
-                        height: 5rem;
-                        min-width: 2.5rem;
-                        margin: 0 1.5rem;
+                        height: 3rem;
+                        min-width: 2rem;
+                        margin: 2rem;
                     }
                 }
-
-
 
                 .navigation-link:hover{
                     filter: grayscale(0) opacity(1);
                     background: lighten($mainNavBackgroundColor, 3);
                     color: $mainLinkAuthColor;
-
                 }
-
             }
-
-
-
         }
+
         .navigation:hover{
-            width: 24rem;
+            width: 17rem;
 
             .navigation-box .navigation-link .link-text{
                 display: block;
+                
             }
-
         }
-        
     }
 
-    
     //Main dashboard
     .main {
         background: $mainBackgroundColor;
@@ -75,19 +67,64 @@
 
         .appname{
             color: white;
+            margin-top: 48px;
+            margin-bottom: 48px;
             text-align: center;
-            font-size: 48px;
+            font-size: 64px;
             font-weight: bold;
         }
+
     }
 
 }
 
-// @media (max-width: 768px) {
-//     .Dashboard{ 
+@media only screen and (max-width: 600px){
+    .Dashboard {
+        .NavigationBar {
 
-//     }
-// }
+            .navigation {
+                width: 100vw;
+                height: 4.5rem;
+                bottom: 0;
+
+                .navigation-box{
+                    justify-content: center;
+                    flex-direction: row;
+                    cursor: pointer;
+    
+                    .navigation-link{
+                        height: 4.5rem;
+                        justify-content: center;
+                        width: 100vw;
+
+                        .logo{
+                            height: 2rem;
+                            min-width: 2.5rem;
+                            margin: 0 1.5rem;
+                        }
+                    }
+    
+                    .navigation-link{
+                        filter: grayscale(20%) opacity(1);
+                        color: $mainLinkAuthColor;
+                    }
+                }
+            }
+    
+            .navigation:hover{
+                width: 100vw;
+    
+                .navigation-box .navigation-link .link-text{
+                    display: none;
+                }
+            }
+        }
+
+        .main {
+            margin-left: 0rem;
+        }
+    }
+}
 
 
 
