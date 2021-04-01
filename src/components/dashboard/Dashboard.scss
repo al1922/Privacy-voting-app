@@ -4,9 +4,12 @@
 
     //Nav dashboard
     .NavigationBar {
+        
 
         .navigation {
-            margin-top: -48px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+            z-index: 2;
+            margin-top: -24px;
             width: 6rem;
             height:100vh;
             position: fixed;
@@ -51,7 +54,7 @@
         }
 
         .navigation:hover{
-            width: 17rem;
+            width: 22rem;
 
             .navigation-box .navigation-link .link-text{
                 display: block;
@@ -67,8 +70,8 @@
 
         .appname{
             color: white;
-            margin-top: 48px;
-            margin-bottom: 48px;
+            margin-top: 24px;
+            margin-bottom: 24px;
             text-align: center;
             font-size: 64px;
             font-weight: bold;

@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react'
 
-import {useAuth} from "../../contexts/AuthContext"
-import {useNotification} from "../../contexts/NotificationContext"
-import {database }  from '../../firebase'
+import { useAuth } from "../../contexts/AuthContext"
+import { useNotification } from "../../contexts/NotificationContext"
+import { database }  from '../../firebase'
 
 import { Modal, Form} from 'react-bootstrap'
 import { HiViewGridAdd} from "react-icons/hi"
@@ -62,7 +62,6 @@ export default function ProfileSettings() {
         } catch{
             setLoading(false)
         }
-
     }
     
     return (
@@ -81,8 +80,8 @@ export default function ProfileSettings() {
                 <p className="create-text"> Create your own room and vote safely.</p>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group id="name">
-                        <Form.Label>Name</Form.Label>
-                            <Form.Control type="name"  pattern=".{5,30}" ref={roomNameRef} /> 
+                        <Form.Label>Name of the room </Form.Label>
+                            <Form.Control type="name"  pattern=".{5,30}" placeholder="Name" ref={roomNameRef} required/> 
                         </Form.Group>
                     <Button name="Create" disabled={loading} type="submit"/>
 

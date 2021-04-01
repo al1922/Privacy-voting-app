@@ -1,0 +1,38 @@
+@import '../base';
+
+.profile-modal .modal-content{
+    min-width: 340px;
+    .profile-text{
+        font-size:1rem;
+    }
+
+    .profile-accordion{
+        display: flex;
+        flex-direction:column;
+
+        .accordion-click{
+            color: white;
+            font-size: 18px;;
+            margin-top: 8px;
+            background: rgb(16, 27, 58);
+            border-radius: 4px;
+            text-decoration: none;
+            transition: 200ms;
+
+        }
+
+        .accordion-click:hover{
+            filter: grayscale(0) opacity(1);
+            background: lighten($mainNavBackgroundColor, 3);
+            color: $mainLinkAuthColor;
+
+        }
+
+        .accordion-body{
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+
+    }
+
+ }
