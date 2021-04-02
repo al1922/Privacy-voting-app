@@ -8,6 +8,7 @@ import { Card} from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 
 import './DisplayRooms.scss'
+import RoomLogo from "../img/RoomLogo.png"
 
 export default function DisplayRooms({user}) {
     
@@ -45,7 +46,7 @@ export default function DisplayRooms({user}) {
             {privateRooms !== null &&  Object.keys(privateRooms).map((key,index) => 
                 
                 <Card className="displaycard" key={key} >
-                    <Card.Img className="image" variant="top" src={`https://picsum.photos/500/500?random=${index}`}/>
+                    <Card.Img className="image" variant="top" src={RoomLogo}/>
                     <Card.Body className="body">
                         <Card.Title >{`Room name: ${privateRooms[key].name}`}</Card.Title>
                         <Card.Text>

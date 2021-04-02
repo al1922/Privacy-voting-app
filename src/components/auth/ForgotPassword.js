@@ -3,6 +3,8 @@ import {Form} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import {useAuth} from "../../contexts/AuthContext"
 import {useNotification} from "../../contexts/NotificationContext"
+
+import Logo from "../img/LogoSVG.svg"
 import Button from "../form_components/Button"
 
 export default function ForgotPassword() {
@@ -34,10 +36,15 @@ export default function ForgotPassword() {
         <div className="ForgotPassword">
             <DisplayError/>
             <DisplayMessage/>
+            
+            <div className="logo">
+                <img className="logoImage" alt="" src={Logo} />
+                <p className="logoName">Fox Vote</p>
+            </div>
+
             <div className="restart" > 
 
-                <p className="app-name">Vote App</p>
-                <hr className="top-line" />
+                <hr className="topLine" />
 
                     <h2 className="text-center mb-4 text-light" >Password Reset</h2>
                     <Form onSubmit={handleSubmit}>
@@ -47,9 +54,9 @@ export default function ForgotPassword() {
                         <Button name="Reset Password" disabled={loading} type="submit"></Button>
                     </Form>
 
-                <hr className="mt-4 top-line" />
+                <hr className="mt-4 topLine" />
 
-                <div className="w-100 text-center mt-2 text-light">
+                <div className="downLink w-100 text-center mt-2 text-light">
                     Back to <Link to="/login" className="link" >Log In</Link>
                 </div>
             </div>

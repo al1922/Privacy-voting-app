@@ -5,6 +5,7 @@ import {Link, useHistory} from "react-router-dom"
 import {useNotification} from "../../contexts/NotificationContext"
 import UploadUserData from './UploadUserData'
 
+import Logo from "../img/LogoSVG.svg"
 import Button from "../form_components/Button"
 
 export default function Signup() {
@@ -38,11 +39,17 @@ export default function Signup() {
 
     return (
         <div className="Signup"> 
+
+            <div className="logo">
+                <img className="logoImage" alt="" src={Logo} />
+                <p className="logoName">Fox Vote</p>
+            </div>
+
+
             <DisplayError/>
             <div className="restart" >
 
-                <p className="app-name">Vote App</p>
-                <hr className="top-line" />
+                <hr className="topLine" />
 
                 <h2 className="text-center mb-4 text-light" >Sing Up</h2>
                 <Form onSubmit={handleSubmit}>
@@ -60,10 +67,10 @@ export default function Signup() {
                     </Form.Group>
                     <Button name="Sing Up" disabled={loading} type="submit"></Button>
                 </Form>
-                <hr className="mt-4 top-line" />
+                <hr className="mt-4 topLine" />
             </div>
                         
-            <div className="w-100 text-center mt-2 text-light" >
+            <div className="downLink w-100 text-center mt-2 text-light" >
                 Alredy have an account? <Link to="/login" className="link">Log In</Link>
             </div>
         </div>

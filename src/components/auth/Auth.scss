@@ -2,31 +2,43 @@
 
 .ForgotPassword, .Login, .Signup{
     background: $mainBackgroundColor;
-
     display: flex;
     flex-direction:column;
     justify-content: center;
     align-items: center;  
 
     .restart{
-        width: 400px;
+        width: 420px;
     }
 
-    .top-line{
-        border: 1px solid white;
+    .topLine{
+        border: 3px solid white;
     }
     
     .link{
         color: $mainLinkAuthColor;
     }
 
-    .app-name{
-        color: white;
-        text-align: center;
-        margin-top: 48px;
-        margin-bottom: 48px;
-        font-size: 48px;
-        font-weight: bold;
+    .downLink{
+        font-size: 1.2rem;
+    }
+
+    .logo{
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        margin: 48px 0 0 0;
+
+        .logoImage{
+            width: 200px;
+            height:200px;
+        }
+        
+        .logoName{
+            font-size: 56px;
+            color: white;
+            white-space: nowrap;
+        }
     }
 
 }
@@ -37,5 +49,24 @@
             margin-top: 0px;
             width: 340px;
         }
+
+        .logo{
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            margin: 48px 0 0 0;
+    
+            .logoImage{
+                width: 150px;
+                height:150px;
+            }
+            
+            .logoName{
+                font-size: 48px;
+                color: white;
+                white-space: nowrap;
+            }
+        }
+
     }
 }
