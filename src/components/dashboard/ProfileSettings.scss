@@ -1,7 +1,12 @@
 @import '../base';
 
+.profile-modal {
+    z-index: -1;
+}
+
 .profile-modal .modal-content{
     min-width: 340px;
+    
     .profile-text{
         font-size:1rem;
     }
@@ -13,8 +18,8 @@
         .accordion-click{
             color: white;
             font-size: 18px;;
-            margin-top: 8px;
-            background: rgb(16, 27, 58);
+            margin-top: 20px;
+            background: $mainNavBackgroundColor;
             border-radius: 4px;
             text-decoration: none;
             transition: 200ms;
@@ -31,6 +36,12 @@
         .accordion-body{
             margin-top:20px;
             margin-bottom:20px;
+
+
+            .deleteEmialText{
+                color:$mainLinkAuthColor;
+                font-weight: bold;
+            }
         }
 
     }

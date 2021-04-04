@@ -13,7 +13,6 @@ import Login from "./auth/Login"
 import ForgotPassword from './auth/ForgotPassword'
 
 import Dashboard from "./dashboard/Dashboard"
-import UpdateProfile from './dashboard/UpdateProfile'
 
 import Room from './room/Room'
 
@@ -29,7 +28,6 @@ function App() {
               <NotificationProvider>
               <Switch>
                 <PrivateRout exact path="/" component={Dashboard} />
-                <PrivateRout path="/update-profile" component={UpdateProfile} />
                 <PrivateRout exact path="/room/:id" component={Room} />
                 <Route path="/singup" component={Signup} />
                 <Route path="/login" component={Login} />

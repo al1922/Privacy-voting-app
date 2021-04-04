@@ -32,7 +32,6 @@ export default function Signup() {
             history.push('/')
         }catch(err){
             setLoading(false)
-            console.log(err.message)
             setError(err.message)
         }
     }

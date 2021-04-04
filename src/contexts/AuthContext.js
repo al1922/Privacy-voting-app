@@ -32,6 +32,9 @@ export function AuthProvider({ children }) {
         return currentUser.updatePassword(password)
     }
 
+    function deleteAccount(){
+        return currentUser.delete()
+    }
 
     useEffect(() => {
 
@@ -50,7 +53,8 @@ export function AuthProvider({ children }) {
         login,
         logout,
         resetPassword,
-        updatePassword
+        updatePassword,
+        deleteAccount
     }
 
     return (

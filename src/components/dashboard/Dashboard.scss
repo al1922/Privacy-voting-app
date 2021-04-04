@@ -9,7 +9,7 @@
         .navigation {
             box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
             z-index: 2;
-            margin-top: -24px;
+            margin-top: -48px;
             width: 6rem;
             height:100vh;
             position: fixed;
@@ -68,15 +68,33 @@
         background: $mainBackgroundColor;
         margin-left: 6rem;
 
-        .appname{
-            color: white;
-            margin-top: 24px;
-            margin-bottom: 24px;
-            text-align: center;
-            font-size: 64px;
-            font-weight: bold;
+        .logo{
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            margin: 48px 0 0 0;
+    
+            .logoImage{
+                width: 200px;
+                height:200px;
+            }
+            
+            .logoName{
+                margin: 0 12px;
+                font-size: 56px;
+                color: white;
+                white-space: nowrap;
+            }
         }
 
+        .noneRooms{
+            display:flex;
+            color: white;
+            font-size: 1.8rem;
+            justify-content: center;
+            text-align: center;
+            margin: 12px 4px 48px 4px;
+        }
     }
 
 }
@@ -125,6 +143,24 @@
 
         .main {
             margin-left: 0rem;
+
+            .logo{
+                display: flex;
+                justify-content: center;
+                align-items:center;
+                margin: 48px 0 0 0;
+        
+                .logoImage{
+                    width: 150px;
+                    height:150px;
+                }
+                
+                .logoName{
+                    font-size: 48px;
+                    color: white;
+                    white-space: nowrap;
+                }
+            }
         }
     }
 }

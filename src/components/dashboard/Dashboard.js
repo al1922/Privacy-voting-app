@@ -1,6 +1,7 @@
 import NavigationBar from './NavigationBar'
 import DisplayRooms from  "./DisplayRooms"
 
+import Logo from "../img/LogoSVG.svg"
 import './Dashboard.scss'
 
 export default function Dashboard() {
@@ -11,7 +12,13 @@ export default function Dashboard() {
             <NavigationBar/>
             
             <div className="main">
-                <p className="appname">Vote App</p>
+                <div className="logo">
+                    <img className="logoImage" alt="" src={Logo} />
+                    <p className="logoName">Fox Vote</p>
+                    
+                </div>
+                <div className="noneRooms">Create a new room in the tab on the left. Rauuu!</div>
+
                 <DisplayRooms/>
             </div>
             
