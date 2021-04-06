@@ -1,0 +1,74 @@
+@import '../base';
+
+#invitationsReceivedIcon{
+    color: #e75a5a;
+    filter: grayscale(0%) opacity(1);
+}
+
+#invitationsReceivedIcon:hover{
+ 
+    filter: grayscale(0) opacity(1);
+    background: lighten($mainNavBackgroundColor, 3);
+    color: #e75a5a;
+}
+
+.invitationsReceived-modal .modal-content{
+
+    overflow-y: scroll;
+    max-height: calc(80vh - 200px);
+}
+
+
+.invitationsReceived-modal{
+
+    .invitationsReceivedCard{
+
+        margin-top: 20px;
+             
+        .invitationsReceivedCardBody{
+
+            
+
+            .invitationsReceivedCardMessage{
+
+                font-size: 18px;
+                text-align: center;
+
+                .invitationsReceivedCardName{
+                    color: $mainLinkAuthColor;
+                    font-weight: 600;
+                }
+
+                .invitationsReceivedCardHost{
+                    color: $mainLinkAuthColor;
+                    font-weight: 600;
+                }
+
+            }
+        }
+
+        .invitationsReceivedButtons{
+
+            display: flex;        
+            justify-content: center;
+            align-items: center;
+            
+    
+            .button-cancel{
+                margin-left: 12px;
+                
+            }
+
+            .button-cancel, .button-accept{
+                transition: 400ms;
+            }
+
+            .button-cancel:hover, .button-accept:hover{
+                background-color: #e45730;
+            }
+        }
+
+    }
+
+
+}

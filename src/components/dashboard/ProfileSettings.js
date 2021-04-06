@@ -69,13 +69,13 @@ export default function ProfileSettings() {
             setLoading(true)
             updateNickname()
             setLoading(false)
-            setError("The nickname has been successfully updated.")
+            setSuccess("The nickname has been successfully updated.")
         }
         catch(err){setError(err.message)}
     }
 
 
-    //Delete account
+    //Delete account - NEED TO BE CHANGED !!!!!!!!!!!!!!!
     const emialRef = useRef()
 
     function handleDeleteAccount(e){
@@ -84,6 +84,15 @@ export default function ProfileSettings() {
         if(emialRef.current.value !== currentUser.email){
             return setError('Emails do not match.')
         }
+
+        try{
+            setLoading(true)
+            deleteAccount()
+            setLoading(false)
+            setSuccess("")
+        }
+        catch(err){setError(err.message)}
+
 
 
     }
