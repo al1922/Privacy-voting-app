@@ -41,7 +41,9 @@ export default function CreateRoom() {
                 admin: currentUser.uid,
             })
             // Push room admin to access root
-            database.ref(`rooms/${roomId.key}/access`).push(currentUser.uid)
+            database.ref(`rooms/${roomId.key}/access/${currentUser.uid}`).set({
+                status: true
+            })
         })
     }
 

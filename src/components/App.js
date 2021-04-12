@@ -19,25 +19,24 @@ import Room from './room/Room'
 import './App.scss'
 import './auth/Auth.scss'
 
-function App() {
+export default function App() {
   return(
    
-      <div className="App">
-          <BrowserRouter>
-            <AuthProvider>
-              <NotificationProvider>
-              <Switch>
-                <PrivateRout exact path="/" component={Dashboard} />
-                <PrivateRout exact path="/room/:id" component={Room} />
-                <Route path="/singup" component={Signup} />
-                <Route path="/login" component={Login} />
-                <Route path="/forgot-password" component={ForgotPassword} />
-               </Switch>
-               </NotificationProvider>
-            </AuthProvider>
-          </BrowserRouter>
-      </div>
+    <div className="App">
+      <BrowserRouter>
+        <AuthProvider>
+          <NotificationProvider>
+          <Switch>
+            <PrivateRout exact path="/" component={Dashboard} />
+            <PrivateRout exact path="/room/:id" component={Room} />
+            <Route path="/singup" component={Signup} />
+            <Route path="/login" component={Login} />
+            <Route path="/forgot-password" component={ForgotPassword} />
+            </Switch>
+            </NotificationProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </div>
   
   )}
 
-export default App;

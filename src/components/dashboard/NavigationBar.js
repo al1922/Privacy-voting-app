@@ -8,6 +8,7 @@ import InvitationsReceived from './InvitationsReceived'
 import ProfileSettings from './ProfileSettings'
 import CreateRoom from './CreateRoom'
 
+import './NavigationBar.scss'
 export default function NavigationBar() {
 
     const {logout} = useAuth()

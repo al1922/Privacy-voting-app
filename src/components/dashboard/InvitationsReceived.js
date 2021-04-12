@@ -24,34 +24,27 @@ export default function InvitationsReceived() {
     const handleHide = () => setShow(false)
 
     useEffect(() => {
-        
-        database.ref(`public/${btoa(currentUser.email)}/rooms`).on("value", (snapShot) => {
+        database.ref(`users/${currentUser.uid}/public/rooms`).on("value", (snapShot) => {
             setInvitations(snapShot.val())
         })
-
-    }, [currentUser.email])
+        
+    }, [currentUser.uid])
 
 
     async function cancelInvitation(roomId){
 
-        await database.ref(`public/${btoa(currentUser.email)}/rooms/${roomId}`).remove()
-
+        await database.ref(`users/${currentUser.uid}/public/rooms/${roomId}`).remove()
     }
 
     async function acceptInvitation(roomId){ 
-        
-        await database.ref(`public/${btoa(currentUser.email)}/rooms/${roomId}`).get().then(function(acceptSnapShot){
+        await database.ref(`users/${currentUser.uid}/public/rooms/${roomId}`).get().then(function(acceptSnapShot){
            
-                database.ref(`users/${currentUser.uid}/private/rooms`).push(roomId).set({
-                    name: acceptSnapShot.val().name,
-                    admin: false,
-
-                })
-
+            database.ref(`users/${currentUser.uid}/private/rooms`).push(roomId).set({
+                name: acceptSnapShot.val().name,
+                admin: false,
+            })
         })
-
         cancelInvitation(roomId)
-        
     }
 
     async function handleAccept(e){
@@ -120,7 +113,7 @@ export default function InvitationsReceived() {
 
                             </Card.Body>
                         </Card>
-                    ): <span></span> } 
+                    ): <span className="invitationsReceivedZero">You don't have any messages.</span> } 
     
                 </Modal.Body>
             </Modal>

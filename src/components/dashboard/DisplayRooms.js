@@ -19,7 +19,6 @@ export default function DisplayRooms() {
     const history = useHistory()
 
     function hadndleJoinToRoom(event){
-        console.log("OK")
         try{
             history.push(`/room/${event.target.value}`)
         }catch{

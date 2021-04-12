@@ -6,22 +6,17 @@ import './Dashboard.scss'
 
 export default function Dashboard() {
 
-
     return (
         <div className="Dashboard">
             <NavigationBar/>
-            
             <div className="main">
                 <div className="logo">
                     <img className="logoImage" alt="" src={Logo} />
                     <p className="logoName">Fox Vote</p>
-                    
                 </div>
                 <div className="noneRooms">Create a new room in the tab on the left. Rauuu!</div>
-
                 <DisplayRooms/>
-            </div>
-            
+            </div> 
         </div>
     )
 }

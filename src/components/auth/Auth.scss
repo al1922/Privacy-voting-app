@@ -44,7 +44,7 @@
 
 }
 
-@media (max-width: 600px) {
+@media (max-width: $mainMediaScreen) {
     .ForgotPassword, .Login, .Signup{ 
         .restart{
             margin-top: 0px;
