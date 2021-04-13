@@ -39,7 +39,7 @@ export default function InvitationsReceived() {
     async function acceptInvitation(roomId){ 
         await database.ref(`users/${currentUser.uid}/public/rooms/${roomId}`).get().then(function(acceptSnapShot){
            
-            database.ref(`users/${currentUser.uid}/private/rooms`).push(roomId).set({
+            database.ref(`users/${currentUser.uid}/private/rooms/${roomId}`).set({
                 name: acceptSnapShot.val().name,
                 admin: false,
             })

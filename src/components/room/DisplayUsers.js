@@ -11,14 +11,14 @@ export default function DisplayUsers({roomId}) {
     //Change online status
     useEffect(() => {
         database.ref(`users/${currentUser.uid}/private`).get().then(function(privateSnapShot){
-            database.ref(`rooms/${roomId}/online/${currentUser.uid}`).set({
+            database.ref(`rooms/${roomId}/public/online/${currentUser.uid}`).set({
                     nickName: privateSnapShot.val().nickName,
                     online: true
             })
         })
 
         return () => {
-            database.ref(`rooms/${roomId}/online/${currentUser.uid}`).update({
+            database.ref(`rooms/${roomId}/public/online/${currentUser.uid}`).update({
                 online: false
             })
         }
@@ -27,11 +27,11 @@ export default function DisplayUsers({roomId}) {
 
     //Get users from database
     useEffect(() => {
-        database.ref(`rooms/${roomId}/online`).on("value", (userSnapShot) => {
+        database.ref(`rooms/${roomId}/public/online`).on("value", (userSnapShot) => {
             setUsers(userSnapShot.val())
         })
         return () => {
-            database.ref(`room/${roomId}/online`).off()
+            database.ref(`room/${roomId}/public/online`).off()
             setUsers(null)
         }
     }, [roomId])

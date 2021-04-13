@@ -36,12 +36,12 @@ export default function CreateRoom() {
         // Push sets roomValues
         roomId.set(roomValues).then(() => {    
             // Push sets to room root
-            database.ref(`rooms/${roomId.key}`).set({
+            database.ref(`rooms/${roomId.key}/private`).set({
                 roomName: roomName,
                 admin: currentUser.uid,
             })
             // Push room admin to access root
-            database.ref(`rooms/${roomId.key}/access/${currentUser.uid}`).set({
+            database.ref(`rooms/${roomId.key}/private/access/${currentUser.uid}`).set({
                 status: true
             })
         })

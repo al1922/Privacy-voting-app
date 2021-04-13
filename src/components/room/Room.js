@@ -1,10 +1,16 @@
 import {useRef, useState, useEffect} from 'react'
 // //import {} from 'react-bootstrap'
 import { database } from '../../firebase'
+import { Link } from 'react-router-dom'
+
 // import { useAuth } from "../../contexts/AuthContext"
 
 import DisplayUsers from './DisplayUsers'
 import Invitation from './Invitation'
+
+import './Room.scss'
+import Logo from "../img/LogoSVG.svg"
+
 
 export default function Room({match}) {
 
@@ -13,28 +19,32 @@ export default function Room({match}) {
 
     useEffect(() => {
         database.ref(`rooms/${roomId}`).on("value" ,snapshot => {
-            console.log(snapshot.exists())
             snapshot.exists() ? setExistId(true): setExistId(false)
         })
+        
         return () => {
             setExistId(false)
             database.ref('rooms').off()
         }
     }, [roomId])
 
-
     return (
         <>
-        {existId 
-         
-            ?<div className="Room">
-                OKOKOKOKO
-                    {/* <Invitation roomId={roomId}/>
-                    <DisplayUsers roomId={roomId}/> */}
+        {existId? 
+
+            <div className="Room">
+
+                <Invitation roomId={roomId}/>
+                <DisplayUsers roomId={roomId}/>
             </div>
         
-            :<div className="Room">
-                The room with the given ID {roomId} does not exist.  
+            :<div className="RoomNoExist">
+                <div className="logo">
+                    <img className="logoImage" alt="" src={Logo} />
+                    <p className="logoName">Fox Vote</p>
+                </div>
+                <span className="room-text">The room with the given ID {roomId} does not exist. Rauuuu! </span>
+                <Link to="/" className="room-link">Back to dashboard.</Link>
             </div>
         }
         </>

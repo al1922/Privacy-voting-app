@@ -1,19 +1,13 @@
 import React from 'react';
-import Signup from './auth/Signup';
 import {BrowserRouter, Switch, Route} from "react-router-dom"
-
-import PrivateRout from './PrivateRout'
-//import PrivateRoutRoom from './PrivateRoutRoom'
-
 import {AuthProvider} from "../contexts/AuthContext"
 import {NotificationProvider} from "../contexts/NotificationContext"
 
-
+import PrivateRout from './PrivateRout'
+import Signup from './auth/Signup';
 import Login from "./auth/Login"
 import ForgotPassword from './auth/ForgotPassword'
-
 import Dashboard from "./dashboard/Dashboard"
-
 import Room from './room/Room'
 
 import './App.scss'
