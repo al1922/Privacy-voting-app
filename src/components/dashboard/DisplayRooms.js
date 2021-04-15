@@ -44,7 +44,7 @@ export default function DisplayRooms() {
                         <Card.Text>
                         Change your temporary description in room settings.
                         </Card.Text>
-                        <button className="button" onClick={hadndleJoinToRoom} key={key} value={key} >Join</button>
+                        <button className="button" onClick={hadndleJoinToRoom} value={key} >Join</button>
                     </Card.Body>
                 </Card>
             )}

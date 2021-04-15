@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 
 import DisplayUsers from './DisplayUsers'
 import Invitation from './Invitation'
+import AddVote from './AddVote'
 
 import './Room.scss'
 import Logo from "../img/LogoSVG.svg"
@@ -36,6 +37,9 @@ export default function Room({match}) {
 
                 <Invitation roomId={roomId}/>
                 <DisplayUsers roomId={roomId}/>
+                <AddVote roomId={roomId}/>
+                <Link to="/" className="room-link">Back to dashboard.</Link>
+
             </div>
         
             :<div className="RoomNoExist">

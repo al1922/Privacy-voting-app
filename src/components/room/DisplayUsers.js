@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import { useAuth } from "../../contexts/AuthContext"
 import { database } from '../../firebase'
 
+import './DisplayUsers.scss'
 
 export default function DisplayUsers({roomId}) {
 
@@ -10,6 +11,7 @@ export default function DisplayUsers({roomId}) {
 
     //Change online status
     useEffect(() => {
+
         database.ref(`users/${currentUser.uid}/private`).get().then(function(privateSnapShot){
             database.ref(`rooms/${roomId}/public/online/${currentUser.uid}`).set({
                     nickName: privateSnapShot.val().nickName,
@@ -17,10 +19,18 @@ export default function DisplayUsers({roomId}) {
             })
         })
 
-        return () => {
+        const cleanup = () => {
             database.ref(`rooms/${roomId}/public/online/${currentUser.uid}`).update({
                 online: false
             })
+        }
+
+        window.addEventListener('beforeunload', cleanup);
+
+        return () => {
+            cleanup()
+            window.removeEventListener('beforeunload', cleanup);
+
         }
        
     }, [roomId, currentUser.uid])
@@ -39,8 +49,12 @@ export default function DisplayUsers({roomId}) {
     return (
         <div className="DisplayUsers">
             <ul className="userList" >
-                {users !== null && Object.keys(users).map(key => 
-                    <li className="userList-element" key={key} >{atob(users[key].nickName)}</li>
+                {users !== null && Object.keys(users).map(key =>
+                    <div className="userList-current" key={key}>
+                        <span className="userList-status">{users[key].online ? 'Online': 'Offline'} </span>
+                        <li className="userList-name"  >{atob(users[key].nickName)}</li>
+                    </div>
+            
                 )}
             </ul>   
 
