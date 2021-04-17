@@ -13,7 +13,7 @@ const choicesActionTypes = {
     deleteChoice : "DELETE_CHOICE"
 }
 
-export default function AddVote() {
+export default function AddVote({roomId}) {
 
     const { setError, DisplayError, setSuccess, DisplaySuccess } = useNotification()
     const [loading, setLoading] = useState(false)
@@ -32,21 +32,7 @@ export default function AddVote() {
     const changeQuestionType = (val) => setQuestionType(val) 
 
         
-    function handleAddVote(e){
-        e.preventDefault()
-        setError('')
-        try{
-            setLoading(true)
-            //sendInvation(invitationEmialRef.current.value)
-            setLoading(false)
-        }
-        catch(err){
-            setLoading(false)
-            setError(err.message)
-        }
-    }
-
-    const [choices, dispatch] = useReducer(choicesReducer, [])
+    const [choices, dispatch] = useReducer(choicesReducer, [{id: Date.now(), value: ""},{id: Date.now()+1, value: ""}])
 
     function choicesReducer(allChoices, action){
         switch(action.type) {
@@ -61,17 +47,36 @@ export default function AddVote() {
                     }
                     return getChoice
                 })
-
+            default:
+                return allChoices
         } 
-    
     }
 
-    function handleCreateChoice(e){
+    async function handleCreateNewVote(e){
         e.preventDefault()
-        dispatch({type: choicesActionTypes.createChoice})
+        setError('')
+        try{
+            setLoading(true)
+            await addNewVote()
+            setLoading(false)
+            setSuccess('YESSSS IT WORKS')
+        }
+        catch(err){
+            setLoading(false)
+            setError(err.message)
+        }
     }
-   
-    console.log(choices)
+
+    async function addNewVote(){
+        console.log(roomId)
+        await database.ref(`rooms/${roomId}/public/vote`).push().set({
+            question: btoa(questionRef),
+            voteType: voteType ,
+            questionType: questionType,
+            choises : choices,
+        })
+    }
+
     return (
         <>
             <DisplaySuccess/>
@@ -82,7 +87,6 @@ export default function AddVote() {
                 <button className="invitation-text" onClick={handleShow} >Invitation</button>
             </div>
 
-            {/* <Button name="Send" disabled={loading} type="submit"></Button> */}
 
             <Modal className="voteModal" show={show} onHide={handleHide} animation={false} >
                 <Modal.Header closeButton>
@@ -90,7 +94,7 @@ export default function AddVote() {
                 </Modal.Header>
                 <Modal.Body>
 
-                    <Form onSubmit={handleAddVote} className="voteForm">
+                    <Form onSubmit={handleCreateNewVote} className="voteForm">
 
                         <Form.Group className="voteForm-group voteForm-question">
                             <Form.Label className="voteForm-title">Question</Form.Label>
@@ -124,10 +128,10 @@ export default function AddVote() {
                         
                         <Form.Group className="voteForm-group voteForm-choices">
                             <Form.Label className="voteForm-title"  >Options/Choices</Form.Label>
-                            <span className="choices-addNew" onClick={handleCreateChoice} >Add New</span>
+                            <span className="choices-addNew" onClick={() => dispatch({type: choicesActionTypes.createChoice})} >Add New</span>
 
                             {choices && choices.map(choice => 
-                                <div className="choices-option"  key={choice.id}>
+                                <div className="choices-option" key={choice.id}>
                                     <Form.Control type="text"  className="option-input" value={choice.value} placeholder="Add your options/choices" onChange={(event) => dispatch({type: choicesActionTypes.updateChoice, payload: { index: choice.id, value: event.target.value }})}  required />
                                     <HiX className="option-delete"  onClick={() => dispatch({type: choicesActionTypes.deleteChoice, payload: { index: choice.id}})} />
 
@@ -135,6 +139,10 @@ export default function AddVote() {
                             )}
 
                         </Form.Group>
+                        <Modal.Footer>
+                            <Button name="Create new vote" disabled={loading} type="submit"/>
+                        </Modal.Footer>
+
                     </Form>
 
                 </Modal.Body>

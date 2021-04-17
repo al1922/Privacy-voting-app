@@ -64,6 +64,7 @@ export default function ProfileSettings() {
 
     function handleChangeNickname(e){
         e.preventDefault()
+        setError('')
 
         try{
             setLoading(true)
@@ -85,6 +86,7 @@ export default function ProfileSettings() {
             return setError('Emails do not match.')
         }
 
+        setError('')
         try{
             setLoading(true)
             deleteAccount()

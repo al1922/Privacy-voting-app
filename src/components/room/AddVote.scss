@@ -3,9 +3,9 @@
 
 .voteModal .modal-content {
     $tipColor: rgb(206, 206, 206);
+    overflow-y: scroll;
+    max-height: 100vh;
 
-    background: $mainBackgroundColor;
-    color: white;
     .voteModal-title{
         font-size: 1.8em;
     }
@@ -132,6 +132,7 @@
             flex-direction: column;
 
             .choices-addNew{
+                color: white;
                 text-align: center;
                 background: $mainButtonAuthColor;
                 border-radius: 5px;

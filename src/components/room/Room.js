@@ -1,9 +1,7 @@
 import {useRef, useState, useEffect} from 'react'
-// //import {} from 'react-bootstrap'
 import { database } from '../../firebase'
 import { Link } from 'react-router-dom'
-
-// import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 
 import DisplayUsers from './DisplayUsers'
 import Invitation from './Invitation'
@@ -16,10 +14,11 @@ import Logo from "../img/LogoSVG.svg"
 export default function Room({match}) {
 
     const [existId, setExistId] = useState(false)
+    const { currentUser } = useAuth()
     const roomId = match.params.id  
 
     useEffect(() => {
-        database.ref(`rooms/${roomId}`).on("value" ,snapshot => {
+        database.ref(`rooms/${roomId}/private/access/${currentUser.uid}`).on("value" ,snapshot => {
             snapshot.exists() ? setExistId(true): setExistId(false)
         })
         
@@ -27,13 +26,13 @@ export default function Room({match}) {
             setExistId(false)
             database.ref('rooms').off()
         }
-    }, [roomId])
+    }, [roomId,currentUser.uid])
 
     return (
         <>
-        {existId? 
+        {existId 
 
-            <div className="Room">
+            ?<div className="Room">
 
                 <Invitation roomId={roomId}/>
                 <DisplayUsers roomId={roomId}/>
