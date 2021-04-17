@@ -1,11 +1,17 @@
-import {useState, useEffect, useRef} from 'react'
+import {useState, useRef, useReducer } from 'react'
 import { useNotification } from "../../contexts/NotificationContext"
 import { database }  from '../../firebase'
 import { Modal, Form} from 'react-bootstrap'
 import Button from "../form_components/Button"
+import { HiX } from "react-icons/hi"
 
 import './AddVote.scss'
 
+const choicesActionTypes = {
+    createChoice : "CREATE_CHOICE",
+    updateChoice : "UPDATE_CHOICE",
+    deleteChoice : "DELETE_CHOICE"
+}
 
 export default function AddVote() {
 
@@ -25,8 +31,7 @@ export default function AddVote() {
     const [questionType, setQuestionType] = useState('singleChoice')
     const changeQuestionType = (val) => setQuestionType(val) 
 
-    
-
+        
     function handleAddVote(e){
         e.preventDefault()
         setError('')
@@ -41,7 +46,32 @@ export default function AddVote() {
         }
     }
 
+    const [choices, dispatch] = useReducer(choicesReducer, [])
 
+    function choicesReducer(allChoices, action){
+        switch(action.type) {
+            case choicesActionTypes.createChoice:
+                return [...allChoices, {id: Date.now(), value: ""}]
+            case choicesActionTypes.deleteChoice:
+                return allChoices.filter(deleteChoice => deleteChoice.id !== action.payload.index)
+            case choicesActionTypes.updateChoice:
+                return allChoices.map(getChoice => {
+                    if( getChoice.id === action.payload.index){
+                        return {...getChoice, value: action.payload.value }
+                    }
+                    return getChoice
+                })
+
+        } 
+    
+    }
+
+    function handleCreateChoice(e){
+        e.preventDefault()
+        dispatch({type: choicesActionTypes.createChoice})
+    }
+   
+    console.log(choices)
     return (
         <>
             <DisplaySuccess/>
@@ -92,12 +122,24 @@ export default function AddVote() {
                             <span className="radio-tip">Select a question type for voting.</span>
                         </Form.Group>
                         
-                        <p>Please select your gender:</p>
+                        <Form.Group className="voteForm-group voteForm-choices">
+                            <Form.Label className="voteForm-title"  >Options/Choices</Form.Label>
+                            <span className="choices-addNew" onClick={handleCreateChoice} >Add New</span>
 
+                            {choices && choices.map(choice => 
+                                <div className="choices-option"  key={choice.id}>
+                                    <Form.Control type="text"  className="option-input" value={choice.value} placeholder="Add your options/choices" onChange={(event) => dispatch({type: choicesActionTypes.updateChoice, payload: { index: choice.id, value: event.target.value }})}  required />
+                                    <HiX className="option-delete"  onClick={() => dispatch({type: choicesActionTypes.deleteChoice, payload: { index: choice.id}})} />
+
+                                </div>
+                            )}
+
+                        </Form.Group>
                     </Form>
 
                 </Modal.Body>
             </Modal>
+
 
         </>
     )
