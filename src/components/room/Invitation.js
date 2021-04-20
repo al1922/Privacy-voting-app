@@ -57,17 +57,16 @@ export default function Invitation({roomId}) {
   
 
     return (
-        <div className="Invitation">
-
+        <>
             <DisplaySuccess/>
             <DisplayError/>
 
-            <div className="invitation-link" >
-                <HiSearch className="invitation-icon" onClick={handleShow} />
-                <button className="invitation-text" onClick={handleShow} >Invitation</button>
+            <div className="navigation-link" onClick={handleShow} >
+                <HiSearch className="logo"/>
+                <span className="link-text"> Invite Participants</span>
             </div>
 
-            <Modal className="profile-modal" show={show} onHide={handleHide}>
+            <Modal className="profile-modal" show={show} onHide={handleHide} animation={false}>
                 <Modal.Header closeButton>
                 <Modal.Title>Invitation</Modal.Title>
                 </Modal.Header>
@@ -83,6 +82,6 @@ export default function Invitation({roomId}) {
                 </Modal.Body>
             </Modal>
 
-        </div>
+        </>
     )
 }

@@ -1,12 +1,14 @@
 import {useState, useEffect} from 'react'
 import { useAuth } from "../../contexts/AuthContext"
 import { database } from '../../firebase'
+import { HiOutlineUsers } from "react-icons/hi"
 
 import './DisplayUsers.scss'
 
 export default function DisplayUsers({roomId}) {
 
     const [users, setUsers] = useState(null)
+    const [countParticipants, setCountParticipants] = useState(1)
     const { currentUser } = useAuth()
 
     //Change online status
@@ -47,8 +49,14 @@ export default function DisplayUsers({roomId}) {
     }, [roomId])
 
     return (
-        <div className="DisplayUsers">
-            <ul className="userList" >
+        <>
+
+            <div className="navigation-link" >
+                <HiOutlineUsers className="logo"/> 
+                <span className="link-text"> Participants</span>
+            </div>
+
+            {/* <ul className="userList" >
                 {users !== null && Object.keys(users).map(key =>
                     <div className="userList-current" key={key}>
                         <span className="userList-status">{users[key].online ? 'Online': 'Offline'} </span>
@@ -56,8 +64,10 @@ export default function DisplayUsers({roomId}) {
                     </div>
             
                 )}
-            </ul>   
+            </ul>    */}
 
-        </div>
+      
+
+        </>
     )
 }

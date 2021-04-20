@@ -1,11 +1,14 @@
 import {useRef, useState, useEffect} from 'react'
 import { database } from '../../firebase'
-import { Link } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { useAuth } from "../../contexts/AuthContext"
+import {HiChevronDoubleLeft} from  "react-icons/hi"
 
 import DisplayUsers from './DisplayUsers'
 import Invitation from './Invitation'
 import AddVote from './AddVote'
+import Voting from './Voting'
+
 import bigInt from "big-integer"
 import {Form} from 'react-bootstrap'
 import Button from "../form_components/Button"
@@ -17,7 +20,8 @@ import Logo from "../img/LogoSVG.svg"
 export default function Room({match}) {
 
     const [existId, setExistId] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const history = useHistory()
+
     const { currentUser } = useAuth()
     const valueRef = useRef(null)
     const roomId = match.params.id  
@@ -97,23 +101,47 @@ export default function Room({match}) {
         catch(err){console.log(err.message)}
     }
 
+    function handleBackToDashboard(){
+        history.push("/")
+    }
+
     return (
         <>
         {existId 
 
             ?<div className="Room">
+                 <div className="NavigationBar-Room">
+                    <nav className="navigation">
+                        <div className="navigation-box">
+                            <Invitation roomId={roomId}/>
+                            <AddVote roomId={roomId}/>
+                            <DisplayUsers roomId={roomId}/> 
+                            <div className="navigation-link" onClick={handleBackToDashboard} >
+                                <HiChevronDoubleLeft className="logo"/>
+                                <span className="link-text" >Back to dashboard</span>
+                            </div>
+                        </div>
+                    </nav>
 
-                <Invitation roomId={roomId}/>
-                <DisplayUsers roomId={roomId}/>
-                <AddVote roomId={roomId}/>
-                <Link to="/" className="room-link">Back to dashboard.</Link>
+                    <div className="main">
+                        <div className="logo">
+                            <img className="logoImage" alt="" src={Logo} />
+                            <p className="logoName">Fox Vote</p>
+                        </div>
+                                     
+                        <div className="noneRooms">Vote on your issues while maintaining your privacy. Rauuu!</div>
+                        
+                        <Voting roomId={roomId}/>
+                    </div> 
+                    
+                </div>
 
-                <Form onSubmit={handleEncrypt}>
+                {/* <Form onSubmit={handleEncrypt}>
                         <Form.Group className="mt-4" id="text">
                             <Form.Control type="number" placeholder="number" ref={valueRef} required /> 
                         </Form.Group>
                         <Button name="Send" disabled={loading} type="submit"></Button>
-                </Form>
+                </Form> */}
 
             </div>
         

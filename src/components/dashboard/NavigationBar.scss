@@ -88,8 +88,8 @@
                 }
 
                 .navigation-link{
-                    filter: grayscale(20%) opacity(1);
-                    color: $mainLinkAuthColor;
+                    filter:  opacity(1);
+                    color: lighten($mainBackgroundColor, 20%);
                 }
             }
         }

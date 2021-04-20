@@ -3,7 +3,7 @@ import { useNotification } from "../../contexts/NotificationContext"
 import { database }  from '../../firebase'
 import { Modal, Form} from 'react-bootstrap'
 import Button from "../form_components/Button"
-import { HiX } from "react-icons/hi"
+import { HiX, HiDocumentAdd } from "react-icons/hi"
 
 import './AddVote.scss'
 
@@ -25,7 +25,7 @@ export default function AddVote({roomId}) {
 
     const questionRef = useRef('')
 
-    const [voteType, setVoteType] = useState(true)
+    const [voteType, setVoteType] = useState(false)
     const changeVoteType = () => voteType ? setVoteType(false) : setVoteType(true)  
     
     const [questionType, setQuestionType] = useState('singleChoice')
@@ -75,7 +75,7 @@ export default function AddVote({roomId}) {
     async function addNewVote(){
         console.log(roomId)
         await database.ref(`rooms/${roomId}/public/vote`).push().set({
-            question: btoa(questionRef),
+            question: questionRef.current.value,
             voteType: voteType ,
             questionType: questionType,
             choises : choices,
@@ -87,9 +87,10 @@ export default function AddVote({roomId}) {
             <DisplaySuccess/>
             <DisplayError/>
 
-            <div className="invitation-link" >
-                {/* <HiSearch className="invitation-icon" onClick={handleShow} /> */}
-                <button className="invitation-text" onClick={handleShow} >Invitation</button>
+
+            <div className="navigation-link" onClick={handleShow} >
+                <HiDocumentAdd className="logo"/>
+                <span className="link-text"> Add New Poll</span>
             </div>
 
 
