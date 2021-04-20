@@ -8,14 +8,12 @@ import { Modal, Form} from 'react-bootstrap'
 import { HiViewGridAdd} from "react-icons/hi"
 
 import Button from "../form_components/Button"
-
 import './CreateRoom.scss'
 
 export default function CreateRoom() {
 
     const { currentUser } = useAuth()
     const { setError, DisplayError, setSuccess, DisplaySuccess } = useNotification()
-
     const [loading, setLoading] = useState(false)
     const roomNameRef = useRef()
     
@@ -24,7 +22,7 @@ export default function CreateRoom() {
     const handleShow = () => setShow(true)
     const handleHide = () => setShow(false)
 
-    function creatNewRoom(roomName){
+    async function creatNewRoom(roomName){
        
         //Create id for room and push to user root
         const roomId = database.ref(`users/${currentUser.uid}/private/rooms`).push()
@@ -34,26 +32,43 @@ export default function CreateRoom() {
             admin: true
         }
         // Push sets roomValues
-        roomId.set(roomValues).then(() => {    
+        await roomId.set(roomValues).then(() => {    
             // Push sets to room root
-            database.ref(`rooms/${roomId.key}/private`).set({
+            database.ref(`rooms/${roomId.key}/private/read`).set({
                 roomName: roomName,
                 admin: currentUser.uid,
             })
             // Push room admin to access root
-            database.ref(`rooms/${roomId.key}/private/access/${currentUser.uid}`).set({
+            database.ref(`rooms/${roomId.key}/public/access/${currentUser.uid}`).set({
                 status: true
             })
         })
+        
+        return roomId.key
+    }
+
+    async function getKeys(roomId){
+        try{
+            const keysUrl = "http://127.0.0.1:5000/getkeys"
+            const response = await fetch(keysUrl, {method: 'POST'})
+            const data = await response.json()
+            database.ref(`rooms/${roomId}/private/privateKey`).set(data.private_key)
+            database.ref(`rooms/${roomId}/public/publicKey`).set(data.public_key)
+
+        }
+        catch(err){
+            console.log(err.message)
+        }
     }
 
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault()
         setError('')
         try{
             setLoading(true)
-            creatNewRoom(roomNameRef.current.value)
+            const id = await creatNewRoom(roomNameRef.current.value)
+            getKeys(id)
             setSuccess("The voting room was created successfully.")
             setLoading(false)
             setShow(false)
@@ -73,7 +88,7 @@ export default function CreateRoom() {
                 <span className="link-text">Create new room</span>
             </div>
             
-            <Modal className="create-modal" show={show} onHide={handleHide}>
+            <Modal className="create-modal" show={show} onHide={handleHide} animation={false} >
                 <Modal.Header closeButton>
                 <Modal.Title>Creat room</Modal.Title>
                 </Modal.Header>

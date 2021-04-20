@@ -1,5 +1,7 @@
 import { auth, database }  from '../../firebase'
 
+// NEED TO FIX NICK CHANGE
+
 export default function UploadUserData(nickName, catchError) {
 
     try {
@@ -12,12 +14,13 @@ export default function UploadUserData(nickName, catchError) {
 
             //Add emial, uid, nick to public root
             database.ref(`public/${btoa(user.email)}`).set({ 
-                uid: user.uid,
+                uid:  user.uid,
                 nickName: btoa(nickName)
             })
         })
+        
     }
     catch(err){
-        catchError(err)
+        catchError(err.message)
     } 
 }

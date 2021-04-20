@@ -37,7 +37,12 @@ export default function AddVote({roomId}) {
     function choicesReducer(allChoices, action){
         switch(action.type) {
             case choicesActionTypes.createChoice:
-                return [...allChoices, {id: Date.now(), value: ""}]
+                if(allChoices.length + 1  <= 10 ){
+                    return [...allChoices, {id: Date.now(), value: ""}]
+                }else{
+                    setError('The limit of created answers is 10')
+                    return allChoices
+                }
             case choicesActionTypes.deleteChoice:
                 return allChoices.filter(deleteChoice => deleteChoice.id !== action.payload.index)
             case choicesActionTypes.updateChoice:
@@ -59,7 +64,7 @@ export default function AddVote({roomId}) {
             setLoading(true)
             await addNewVote()
             setLoading(false)
-            setSuccess('YESSSS IT WORKS')
+            setSuccess('The vote has been successfully created')
         }
         catch(err){
             setLoading(false)

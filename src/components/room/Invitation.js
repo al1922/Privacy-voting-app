@@ -22,14 +22,14 @@ export default function Invitation({roomId}) {
         database.ref(`public/${btoa(email)}`).get().then(function(snapshotPublic){
 
             // Get all room users 
-            snapshotPublic.val() ? database.ref(`rooms/${roomId}/private/access`).get().then(function(snapshotAccess){
+            snapshotPublic.val() ? database.ref(`rooms/${roomId}/public/access`).get().then(function(snapshotAccess){
 
                 // Checking if user is in room. 
-                Object.values(snapshotAccess.val()).includes(snapshotPublic.val().uid) ? setError('User with this email already is in room.'): ( async () => {
+                Object.keys(snapshotAccess.val()).includes(snapshotPublic.val().uid) ? setError('User with this email already is in room.'): ( async () => {
                     //If not, add him 
-                    await database.ref(`rooms/${roomId}/private/access/${snapshotPublic.val().uid}`).set({status: true})
+                    await database.ref(`rooms/${roomId}/public/access/${snapshotPublic.val().uid}`).set({status: true})
 
-                    database.ref(`rooms/${roomId}/private/roomName`).get().then(function(snapshotRoomName){
+                    database.ref(`rooms/${roomId}/private/read/roomName`).get().then(function(snapshotRoomName){
                         
                         database.ref(`users/${snapshotPublic.val().uid}/public/rooms/${roomId}`).set({name: snapshotRoomName.val(), admin: false})
 
