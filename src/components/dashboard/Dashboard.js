@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import NavigationBar from './NavigationBar'
 import DisplayRooms from  "./DisplayRooms"
 

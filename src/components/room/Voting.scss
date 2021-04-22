@@ -1,0 +1,62 @@
+@import '../base';
+
+
+.Voting{
+
+    .voting-title{
+        display: flex;
+        color:white;
+        font-size: 2rem;
+        justify-content: center;
+    }
+
+    .voting-questions{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 2em;
+        color: white;
+
+        .questionsList-card{
+            margin-bottom: 2em;
+            background-color: $mainNavBackgroundColor;
+            width: 80vw;
+            .questionsList-question{
+                font-size: 1.5rem;
+            }
+
+            .questionsList-button{
+                background-color: $mainBackgroundColor; 
+                border: none;
+                color: white;
+                padding: 10px 24px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                border-radius: 12px;
+                transition: 0.4s;
+            }
+
+            .questionsList-button:hover{
+                background-color: lighten($mainBackgroundColor,20%); 
+
+            }
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: $mainMediaScreen){
+
+    .Voting{
+        .voting-questions{
+            margin-bottom: 3em;
+     
+
+        }
+    }
+
+
+}

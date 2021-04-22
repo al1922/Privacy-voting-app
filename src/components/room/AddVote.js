@@ -1,7 +1,7 @@
 import {useState, useRef, useReducer } from 'react'
 import { useNotification } from "../../contexts/NotificationContext"
 import { database }  from '../../firebase'
-import { Modal, Form} from 'react-bootstrap'
+import { Modal, Form } from 'react-bootstrap'
 import Button from "../form_components/Button"
 import { HiX, HiDocumentAdd } from "react-icons/hi"
 
@@ -73,12 +73,13 @@ export default function AddVote({roomId}) {
     }
 
     async function addNewVote(){
-        console.log(roomId)
         await database.ref(`rooms/${roomId}/public/vote`).push().set({
             question: questionRef.current.value,
             voteType: voteType ,
             questionType: questionType,
             choises : choices,
+            timeCreate: Date.now(),
+            status: "Active",
         })
     }
 
@@ -86,7 +87,6 @@ export default function AddVote({roomId}) {
         <>
             <DisplaySuccess/>
             <DisplayError/>
-
 
             <div className="navigation-link" onClick={handleShow} >
                 <HiDocumentAdd className="logo"/>
@@ -143,8 +143,8 @@ export default function AddVote({roomId}) {
 
                                 </div>
                             )}
-
                         </Form.Group>
+
                         <Modal.Footer>
                             <Button name="Create new vote" disabled={loading} type="submit"/>
                         </Modal.Footer>

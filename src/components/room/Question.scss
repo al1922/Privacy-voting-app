@@ -1,0 +1,94 @@
+@import '../base';
+
+
+.questionModal .modal-content {
+    $tipColor: rgb(206, 206, 206);
+    overflow-y: scroll;
+    max-height: 100vh;
+
+    .questionModal-title{
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+
+    .questionForm{
+        .questionForm-group{
+            .voteForm-title{
+                font-size: 1.5em;
+                font-weight: 200;
+            }
+        }
+
+        //Choises 
+        .questionForm-radio{
+            
+            .radio{
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: max-content;
+                height: 1.4em;
+
+                .radio-input{
+                    display: none;
+                }
+
+                .radio-box{
+                    width: 1.2em;
+                    height: 1.2em;
+                    border: 0.15em solid $mainBackgroundColor;
+                    border-radius:50%;
+                }
+
+                .radio-box:after{
+                    content: "";
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    background: $mainBackgroundColor;
+                    border-radius:50%;
+                    transform: scale(0);
+                    transition: .4s;
+
+                }
+
+                .radio-input:checked + .radio-box:after{
+                    transform: scale(0.7);
+                }
+
+                .radio-text{
+                    font-size: 1.1em;
+                    font-weight: 200;
+                    margin-left: 0.5em;
+                }
+
+            }
+        }
+
+        .radio-tip{
+            font-size: 0.8em;
+            font-weight: 600;
+            color: $tipColor;
+
+        }
+    }
+
+    .questionForm-button{
+        background-color: $mainBackgroundColor; 
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 12px;
+        transition: 0.4;
+    }
+    
+    .questionForm-button:hover{
+        background-color: lighten($mainBackgroundColor,20%);
+    }
+    
+}
