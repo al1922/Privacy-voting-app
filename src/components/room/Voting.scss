@@ -15,12 +15,12 @@
         justify-content: center;
         align-items: center;
         margin-right: 2em;
-        color: white;
+        //color: white;
 
         .questionsList-card{
             margin-bottom: 2em;
-            background-color: $mainNavBackgroundColor;
             width: 80vw;
+            
             .questionsList-question{
                 font-size: 1.5rem;
             }
@@ -36,6 +36,9 @@
                 font-size: 16px;
                 border-radius: 12px;
                 transition: 0.4s;
+                min-width: 9em;
+                margin: 0.5em;
+                white-space:nowrap;
             }
 
             .questionsList-button:hover{

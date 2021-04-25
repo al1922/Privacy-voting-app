@@ -1,15 +1,18 @@
 import {useState} from 'react'
 import {Form, Modal} from 'react-bootstrap'
+import { database } from '../../firebase'
 import { useNotification } from "../../contexts/NotificationContext"
+import { useAuth } from "../../contexts/AuthContext"
 
 import {EncryptData} from './Encryption'
 
 import './Question.scss'
 
-export default function Question({props, publicKey}) {
+export default function Question({props, questionId, roomId, publicKey}) {
 
-    const { setError, DisplayError, setSuccess, DisplaySuccess } = useNotification()
+    const { setError, setSuccess} = useNotification()
     const [loading, setLoading] = useState(false)
+    const { currentUser } = useAuth()
 
     const [choises] = useState(props.choises)
 
@@ -17,13 +20,33 @@ export default function Question({props, publicKey}) {
     const changeChoise = (key) => setChoisesValue(key)
 
 
-    function handleSendReply(e){
+    async function voteOn(){
+
+        await database.ref(`rooms/${roomId}/public/vote/${questionId}/answers`).get().then(async function(accesSnapShot){
+            if(!accesSnapShot.hasChild(currentUser.uid)){
+                const encryptedResult = await EncryptData(choisesValue, publicKey)
+                await database.ref(`rooms/${roomId}/public/vote/${questionId}/answers/${currentUser.uid}`).set({
+                    answer: encryptedResult.value.toString()
+                })
+                setSuccess("The vote was successful")
+            }
+            else{
+                setError('The vote has already been cast')
+            }
+
+        }).catch((err) => {
+            setError(err)
+        })
+
+
+    }
+
+    async function handleSendReply(e){
         e.preventDefault()
         setError('')
         try{
             setLoading(true)
-            console.log(EncryptData(choisesValue,publicKey))
-            setSuccess("Work")
+            await voteOn()
             setLoading(false)
         }
         catch(err){
@@ -37,7 +60,7 @@ export default function Question({props, publicKey}) {
             <Form onSubmit={handleSendReply} className="questionForm">
 
                 <Form.Group className="questionForm-group questionForm-radio">
-                    <Form.Label className="voteForm-title">Choises</Form.Label>
+                    <Form.Label className="voteForm-title">Options/Choices</Form.Label>
                     { choises !== null && Object.keys(choises).map(key=> 
                         <label className="radio" key={key}>
                             <input className="radio-input" type="radio" name="type"  value={key} checked={key === choisesValue}  onChange={event => changeChoise(event.target.value)} />

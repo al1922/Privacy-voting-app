@@ -1,0 +1,38 @@
+@import '../base';
+
+.questionModal-resoult .modal-content {
+    $tipColor: rgb(206, 206, 206);
+    max-height: 100vh;
+
+    .questionModal-title{
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+
+   .result-adminPanel{
+       display: flex;
+       justify-content: center;
+
+        .adminPanel-button{
+            background-color: $mainBackgroundColor; 
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 12px;
+            transition: 0.4s;
+            min-width: 9em;
+            margin: 0.5em;
+            white-space:nowrap;
+        }
+
+        .adminPanel-button:hover{
+            background-color: lighten($mainBackgroundColor,20%); 
+
+        }
+    }
+    
+}

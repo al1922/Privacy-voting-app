@@ -133,7 +133,7 @@ export default function AddVote({roomId}) {
                         </Form.Group>
                         
                         <Form.Group className="voteForm-group voteForm-choices">
-                            <Form.Label className="voteForm-title"  >Options/Choices</Form.Label>
+                            <Form.Label className="voteForm-title">Options/Choices</Form.Label>
                             <span className="choices-addNew" onClick={() => dispatch({type: choicesActionTypes.createChoice})} >Add New</span>
 
                             {choices && choices.map(choice => 

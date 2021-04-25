@@ -1,15 +1,16 @@
 import bigInt from "big-integer"
 
-export function EncryptData(value, publicKey) {
+export async function EncryptData(value, publicKey) {
 
     const valueMod = bigInt(1000).pow(value)
- 
     let g = bigInt(publicKey.g)
     let n = bigInt(publicKey.n)
     let n2 = n.pow(2)
     let r = bigInt.randBetween(1, n-1)
 
-    return g.modPow(valueMod, n2).multiply(r.modPow(n, n2)).mod(n2)
+    let res = g.modPow(valueMod, n2).multiply(r.modPow(n, n2)).mod(n2)
+
+    return Promise.resolve(res)
 }
 
 
@@ -19,14 +20,18 @@ export function DecryptData(value, privateKey){
     let n = bigInt(privateKey.n)
     let n2 = n.pow(2)
 
-    return  value.modPow(alpha, n2).minus(1).divide(n).multiply(mu).mod(n)
+    let res = value.modPow(alpha, n2).minus(1).divide(n).multiply(mu).mod(n)
+
+    return  Promise.resolve(res)
 }
 
 export function EncryptSum(value1, value2, publicKey){
     let n = bigInt(publicKey.n)
     let n2 = n.pow(2)
 
-    return bigInt(value1).multiply(value2).mod(n2)
+    let res = bigInt(value1).multiply(value2).mod(n2)
+
+    return Promise.resolve(res)
 }
 
 

@@ -1,9 +1,8 @@
 @import '../base';
 
 
-.questionModal .modal-content {
+.questionModal-vote .modal-content {
     $tipColor: rgb(206, 206, 206);
-    overflow-y: scroll;
     max-height: 100vh;
 
     .questionModal-title{
@@ -25,18 +24,19 @@
             .radio{
                 cursor: pointer;
                 display: flex;
-                justify-content: center;
                 align-items: center;
-                width: max-content;
-                height: 1.4em;
+                height: 2.5em;
+
 
                 .radio-input{
                     display: none;
                 }
 
                 .radio-box{
-                    width: 1.2em;
-                    height: 1.2em;
+                    width: 1.5em;
+                    height: 1.5em;
+                    min-width: 1.5em;
+                    min-height: 1.5em;
                     border: 0.15em solid $mainBackgroundColor;
                     border-radius:50%;
                 }
@@ -59,8 +59,9 @@
 
                 .radio-text{
                     font-size: 1.1em;
-                    font-weight: 200;
-                    margin-left: 0.5em;
+                    font-weight: 600;
+                    margin-left: 0.8em;
+
                 }
 
             }
