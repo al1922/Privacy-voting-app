@@ -11,7 +11,6 @@ export default function Voting({roomId}) {
     const [votingQuestions, setVotingQuestions] = useState(null)
     const [publicKey, setPublicKey] = useState(null)
     const [votingCount, setVotingCount] = useState(0)
-    const [votingTotalCount, setVotingTotalCount] = useState(0)
 
     //Display Modal
     const [show, setShow] = useState('false')
@@ -26,6 +25,7 @@ export default function Voting({roomId}) {
     useEffect(() => {
         database.ref(`rooms/${roomId}/public/vote`).on("value", (voteSnapShot) => {
             setVotingQuestions(voteSnapShot.val())
+            
         })
         return () => {
             database.ref(`rooms/${roomId}/vote`).off()
@@ -50,13 +50,14 @@ export default function Voting({roomId}) {
         }
     }, [roomId])
 
+
     return (
         <div className="Voting">
             <p className="voting-title">Questions</p>
 
             <div className="voting-questions">
                 <ul className="voting-questionsList" >
-                    {votingQuestions !== null && Object.keys(votingQuestions).map(key =>
+                    {votingQuestions !== null && Object.keys(votingQuestions).reverse().map(key =>
                         
                         <div key={key}> 
                             <Card className="text-center questionsList-card" >
@@ -64,7 +65,7 @@ export default function Voting({roomId}) {
                                 <Card.Body>
                                     <Card.Title className="questionsList-question">{votingQuestions[key].question}</Card.Title>
                                     <Card.Text className="questionsList-countVoted">
-                                        Voted: {votingTotalCount}/{votingCount}<br/>
+                                        Voted: {votingQuestions[key].answers ? Object.keys(votingQuestions[key].answers).length : '0' }/{votingCount}<br/>
                                         Status: {votingQuestions[key].status}
                                     </Card.Text>
                                     <button className="questionsList-button" onClick={() => handleShow(key)}>Vote</button>

@@ -10,7 +10,7 @@ export async function EncryptData(value, publicKey) {
 
     let res = g.modPow(valueMod, n2).multiply(r.modPow(n, n2)).mod(n2)
 
-    return Promise.resolve(res)
+    return res
 }
 
 
@@ -22,7 +22,7 @@ export function DecryptData(value, privateKey){
 
     let res = value.modPow(alpha, n2).minus(1).divide(n).multiply(mu).mod(n)
 
-    return  Promise.resolve(res)
+    return  res
 }
 
 export function EncryptSum(value1, value2, publicKey){
@@ -31,8 +31,10 @@ export function EncryptSum(value1, value2, publicKey){
 
     let res = bigInt(value1).multiply(value2).mod(n2)
 
-    return Promise.resolve(res)
+    return res
 }
+
+
 
 
 

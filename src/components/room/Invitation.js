@@ -27,7 +27,7 @@ export default function Invitation({roomId}) {
                 // Checking if user is in room. 
                 Object.keys(snapshotAccess.val()).includes(snapshotPublic.val().uid) ? setError('User with this email already is in room.'): ( async () => {
                     //If not, add him 
-                    await database.ref(`rooms/${roomId}/public/access/${snapshotPublic.val().uid}`).set({status: true})
+                    await database.ref(`rooms/${roomId}/public/access/${snapshotPublic.val().uid}`).set({email: btoa(email)})
 
                     database.ref(`rooms/${roomId}/private/read/roomName`).get().then(function(snapshotRoomName){
                         

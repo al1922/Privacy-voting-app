@@ -22,22 +22,15 @@ export default function Question({props, questionId, roomId, publicKey}) {
 
     async function voteOn(){
 
-        await database.ref(`rooms/${roomId}/public/vote/${questionId}/answers`).get().then(async function(accesSnapShot){
-            if(!accesSnapShot.hasChild(currentUser.uid)){
-                const encryptedResult = await EncryptData(choisesValue, publicKey)
-                await database.ref(`rooms/${roomId}/public/vote/${questionId}/answers/${currentUser.uid}`).set({
-                    answer: encryptedResult.value.toString()
-                })
-                setSuccess("The vote was successful")
-            }
-            else{
-                setError('The vote has already been cast')
-            }
+        await database.ref(`rooms/${roomId}/public/vote/${questionId}/answers`).get().then(function(accesSnapShot){
+           !accesSnapShot.hasChild(currentUser.uid) ? setSuccess("The vote was successful") : setSuccess('The vote has been changed')
 
-        }).catch((err) => {
-            setError(err)
         })
 
+        const encryptedResult = await EncryptData(choisesValue, publicKey)
+        await database.ref(`rooms/${roomId}/public/vote/${questionId}/answers/${currentUser.uid}`).set({
+            answer: encryptedResult.value.toString()
+        })
 
     }
 
@@ -56,8 +49,8 @@ export default function Question({props, questionId, roomId, publicKey}) {
     }
 
     return (
-        <>
-            <Form onSubmit={handleSendReply} className="questionForm">
+        props.status === 'Active' 
+            ? <Form onSubmit={handleSendReply} className="questionForm">
 
                 <Form.Group className="questionForm-group questionForm-radio">
                     <Form.Label className="voteForm-title">Options/Choices</Form.Label>
@@ -78,6 +71,10 @@ export default function Question({props, questionId, roomId, publicKey}) {
 
             </Form>
 
-        </>
+            : <div className="questionForm-end">
+                <h4>The vote is now over.</h4>
+                <h6>You can no longer vote.</h6>
+            </div>
+        
     )
 }

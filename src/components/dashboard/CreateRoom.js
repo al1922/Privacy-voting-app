@@ -40,7 +40,7 @@ export default function CreateRoom() {
             })
             // Push room admin to access root
             database.ref(`rooms/${roomId.key}/public/access/${currentUser.uid}`).set({
-                status: true
+                email: btoa(currentUser.email)
             })
         })
         
